@@ -9,6 +9,7 @@ export default function SearchBar({ value, onChange }: SearchBarProps) {
   return (
     <div className="relative">
       <svg
+        suppressHydrationWarning
         className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400"
         fill="none"
         stroke="currentColor"

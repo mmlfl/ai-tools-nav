@@ -2,6 +2,7 @@ export default function EmptyState() {
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center">
       <svg
+        suppressHydrationWarning
         className="h-16 w-16 text-zinc-300 dark:text-zinc-600"
         fill="none"
         stroke="currentColor"
