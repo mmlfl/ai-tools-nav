@@ -29,3 +29,21 @@ export const PRICING_LABELS: Record<Pricing, string> = {
   paid: "付费",
   waitlist: "内测中",
 };
+
+// Content types (Phase 2)
+
+export interface CompareFrontmatter {
+  title: string;
+  description: string;
+  tools: string[];
+  date: string;
+  featured?: boolean;
+}
+
+export interface ComparePage {
+  slug: string;
+  frontmatter: CompareFrontmatter;
+  content: string;
+  html: string;
+  relatedTools: Tool[];
+}
