@@ -67,3 +67,22 @@ export function WebSite() {
     />
   );
 }
+
+export function Article({ page }: { page: { title: string; description: string; slug: string; date: string } }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: page.title,
+    description: page.description,
+    url: `${BASE_URL}/compare/${page.slug}`,
+    datePublished: page.date,
+    author: { "@type": "Organization", name: "AI Tools Nav" },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}

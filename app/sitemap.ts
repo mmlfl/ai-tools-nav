@@ -1,10 +1,11 @@
 import { MetadataRoute } from "next";
 import { Tool } from "@/types/tool";
 import toolsData from "@/data/tools.json";
+import { getAllComparePages } from "@/lib/content";
 
 const BASE_URL = "https://lflaitool.top";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const tools = toolsData as Tool[];
 
   const staticPages = [
@@ -25,5 +26,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...toolPages];
+  const comparePages = getAllComparePages();
+  const compareUrls = comparePages.map((p) => ({
+    url: `${BASE_URL}/compare/${p.slug}`,
+    lastModified: new Date(p.frontmatter.date),
+    changeFrequency: "monthly" as const,
+    priority: 0.7 as const,
+  }));
+
+  return [...staticPages, ...toolPages, ...compareUrls];
 }
