@@ -1,0 +1,27 @@
+{
+  "compare": [
+    {
+      "slug": "chatgpt-vs-claude",
+      "title": "ChatGPT vs Claude：2026年全面对比评测",
+      "description": "详细对比 ChatGPT 和 Claude 的功能、价格、适用场景，帮你选择最合适的 AI 对话工具",
+      "tools": ["chatgpt", "claude"],
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "midjourney-vs-dalle",
+      "title": "Midjourney vs DALL·E 3：2026年AI图像生成工具全面对比",
+      "description": "从画质、速度、价格、易用性角度对比 Midjourney 和 DALL·E 3 两大 AI 图像生成工具，帮你找到最适合的创作伙伴",
+      "tools": ["midjourney", "dall-e"],
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "github-copilot-vs-cursor",
+      "title": "GitHub Copilot vs Cursor：2026年AI编程助手全面对比",
+      "description": "对比 GitHub Copilot 和 Cursor 两大 AI 编程工具的功能、定价和适用场景，帮助开发者选择最佳代码助手",
+      "tools": ["github-copilot", "cursor"],
+      "date": "2026-05-13"
+    }
+  ],
+  "list": [],
+  "guide": []
+}
