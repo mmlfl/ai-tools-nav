@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prebuild": "node -e \"require('fs').writeFileSync('public/ads.txt','google.com, '+process.env.ADSENSE_PUBLISHER_ID+', DIRECT, f08c47fec0942fa0')\"",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

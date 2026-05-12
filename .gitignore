@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# generated at build time, contains secret
+public/ads.txt
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
