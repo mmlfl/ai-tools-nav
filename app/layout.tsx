@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
+import { WebSite } from "@/components/StructuredData";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,8 +15,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Tools Nav - 发现最优秀的 AI 工具",
-  description: "精选 AI 工具导航，帮你发现最新最实用的 AI 产品",
+  metadataBase: new URL("https://lflaitool.top"),
+  title: {
+    default: "AI Tools Nav - 发现最优秀的 AI 工具",
+    template: "%s | AI Tools Nav",
+  },
+  description: "精选 AI 工具导航，涵盖对话、图像、视频、编程、音频、办公、搜索等 7 大类 AI 工具。帮你发现最新最实用的 AI 产品，提升工作效率。",
+  keywords: ["AI工具", "人工智能", "AI导航", "ChatGPT", "AI编程", "AI绘图", "AI视频", "AI工具推荐"],
+  openGraph: {
+    type: "website",
+    locale: "zh_CN",
+    siteName: "AI Tools Nav",
+    title: "AI Tools Nav - 发现最优秀的 AI 工具",
+    description: "精选 AI 工具导航，帮你发现最新最实用的 AI 产品",
+  },
 };
 
 export default function RootLayout({
@@ -30,6 +43,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
+        <WebSite />
         <header className="sticky top-0 z-50 border-b border-zinc-200/80 bg-white/80 backdrop-blur-sm dark:border-zinc-800/80 dark:bg-zinc-950/80">
           <nav className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
             <Link href="/" className="text-lg font-bold tracking-tight">

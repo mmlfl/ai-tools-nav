@@ -10,7 +10,9 @@
       "mcp__plugin_everything-claude-code_playwright__browser_navigate",
       "PowerShell(\\(Invoke-WebRequest -Uri http://localhost:3000 -UseBasicParsing\\).StatusCode)",
       "PowerShell(\\(Invoke-WebRequest -Uri http://localhost:3000/category/chat -UseBasicParsing\\).StatusCode)",
-      "PowerShell(Start-Sleep -Seconds 3; \\(Invoke-WebRequest -Uri http://localhost:3000 -UseBasicParsing\\).StatusCode)"
+      "PowerShell(Start-Sleep -Seconds 3; \\(Invoke-WebRequest -Uri http://localhost:3000 -UseBasicParsing\\).StatusCode)",
+      "Bash(curl -sI https://ai.tools.com)",
+      "Bash(curl *)"
     ]
   }
 }
