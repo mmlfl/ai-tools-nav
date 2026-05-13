@@ -7,6 +7,7 @@ import json
 import os
 import sys
 from pathlib import Path
+import itertools
 from datetime import date
 
 from dotenv import load_dotenv
@@ -136,26 +137,27 @@ def main():
     for cat, cat_tools in categories.items():
         if len(cat_tools) < 2:
             continue
-        t1, t2 = cat_tools[0], cat_tools[1]
-        slugs = [t1["slug"], t2["slug"]]
-        output_filename = f"{slugs[0]}-vs-{slugs[1]}"
+        for t1, t2 in itertools.combinations(cat_tools, 2):
+            slugs = [t1["slug"], t2["slug"]]
+            filename_a = f"{slugs[0]}-vs-{slugs[1]}"
+            filename_b = f"{slugs[1]}-vs-{slugs[0]}"
 
-        if (CONTENT_DIR / f"{output_filename}.md").exists():
-            print(f"Skip existing: {output_filename}.md")
-            continue
+            if (CONTENT_DIR / f"{filename_a}.md").exists() or (CONTENT_DIR / f"{filename_b}.md").exists():
+                print(f"Skip existing: {slugs[0]} vs {slugs[1]}")
+                continue
 
-        print(f"Generating: {t1['name']} vs {t2['name']} ({cat})")
-        for attempt in range(2):
-            try:
-                content = generate_compare(t1, t2, cat)
-                slug = save_article(slugs, content)
-                fm = parse_frontmatter(content)
-                update_index(slug, fm)
-                break
-            except Exception as e:
-                print(f"  Attempt {attempt + 1} failed: {e}", file=sys.stderr)
-                if attempt == 1:
-                    print(f"  Giving up on {output_filename}")
+            print(f"Generating: {t1['name']} vs {t2['name']} ({cat})")
+            for attempt in range(2):
+                try:
+                    content = generate_compare(t1, t2, cat)
+                    slug = save_article(slugs, content)
+                    fm = parse_frontmatter(content)
+                    update_index(slug, fm)
+                    break
+                except Exception as e:
+                    print(f"  Attempt {attempt + 1} failed: {e}", file=sys.stderr)
+                    if attempt == 1:
+                        print(f"  Giving up on {filename_a}")
 
 
 if __name__ == "__main__":
