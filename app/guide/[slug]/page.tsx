@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getGuideSlugs, getGuideContent } from "@/lib/content";
+import { getGuideSlugs, getGuideContent, getComparePagesForTool } from "@/lib/content";
 import ToolCard from "@/components/ToolCard";
 import { BreadcrumbList, Article } from "@/components/StructuredData";
 
@@ -36,6 +36,8 @@ export default async function GuidePage({ params }: Props) {
   const page = getGuideContent(slug);
 
   if (!page) notFound();
+
+  const comparePages = page.tool ? getComparePagesForTool(page.tool.slug) : [];
 
   return (
     <>
@@ -73,6 +75,28 @@ export default async function GuidePage({ params }: Props) {
             <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">相关工具</h2>
             <div className="mt-4 max-w-sm">
               <ToolCard tool={page.tool} />
+            </div>
+          </section>
+        )}
+
+        {comparePages.length > 0 && (
+          <section className="mt-12">
+            <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">相关对比</h2>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {comparePages.map((p) => (
+                <Link
+                  key={p.slug}
+                  href={`/compare/${p.slug}`}
+                  className="group rounded-xl border border-zinc-200/80 bg-white p-4 transition hover:border-zinc-300 hover:shadow-sm dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:border-zinc-700"
+                >
+                  <h3 className="text-sm font-medium text-zinc-900 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                    {p.frontmatter.title}
+                  </h3>
+                  <p className="mt-1 line-clamp-1 text-xs text-zinc-500 dark:text-zinc-400">
+                    {p.frontmatter.description}
+                  </p>
+                </Link>
+              ))}
             </div>
           </section>
         )}

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getCompareSlugs, getCompareContent } from "@/lib/content";
+import { getCompareSlugs, getCompareContent, getGuidePageForTool } from "@/lib/content";
 import ToolCard from "@/components/ToolCard";
 import { BreadcrumbList, Article } from "@/components/StructuredData";
 
@@ -72,9 +72,22 @@ export default async function ComparePage({ params }: Props) {
           <section className="mt-12">
             <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">文章中提到的工具</h2>
             <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {page.relatedTools.map((t) => (
-                <ToolCard key={t.slug} tool={t} />
-              ))}
+              {page.relatedTools.map((t) => {
+                const guide = getGuidePageForTool(t.slug);
+                return (
+                  <div key={t.slug} className="space-y-3">
+                    <ToolCard tool={t} />
+                    {guide && (
+                      <Link
+                        href={`/guide/${guide.slug}`}
+                        className="block rounded-lg border border-emerald-200/60 bg-emerald-50 px-3 py-2 text-xs text-emerald-700 transition hover:bg-emerald-100 dark:border-emerald-800/60 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-950/70"
+                      >
+                        📖 {guide.frontmatter.title}
+                      </Link>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </section>
         )}

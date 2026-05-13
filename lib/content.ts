@@ -65,3 +65,15 @@ export function getAllGuidePages(): GuidePage[] {
     .map(getGuideContent)
     .filter((p): p is GuidePage => p !== null);
 }
+
+// Cross-reference helpers
+
+export function getComparePagesForTool(slug: string): ComparePage[] {
+  return getAllComparePages().filter((p) =>
+    p.frontmatter.tools.includes(slug)
+  );
+}
+
+export function getGuidePageForTool(slug: string): GuidePage | null {
+  return getAllGuidePages().find((p) => p.frontmatter.tool === slug) ?? null;
+}
