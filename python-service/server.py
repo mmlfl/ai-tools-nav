@@ -17,7 +17,13 @@ app.add_middleware(
 
 @app.post("/api/recommend")
 async def recommend(request: Request):
-    body = await request.json()
+    try:
+        body = await request.json()
+    except Exception:
+        return StreamingResponse(
+            iter(["data: " + json.dumps({"error": "invalid JSON body"}, ensure_ascii=False) + "\n\n"]),
+            media_type="text/event-stream",
+        )
     query = body.get("query", "")
     if not query:
         return StreamingResponse(
@@ -26,9 +32,13 @@ async def recommend(request: Request):
         )
 
     async def event_stream():
-        async for token in recommend_stream(query):
-            yield f"data: {json.dumps({'token': token}, ensure_ascii=False)}\n\n"
-        yield "data: [DONE]\n\n"
+        try:
+            async for token in recommend_stream(query):
+                yield f"data: {json.dumps({'token': token}, ensure_ascii=False)}\n\n"
+        except Exception:
+            yield f"data: {json.dumps({'error': 'streaming failed'}, ensure_ascii=False)}\n\n"
+        finally:
+            yield "data: [DONE]\n\n"
 
     return StreamingResponse(event_stream(), media_type="text/event-stream")
 
