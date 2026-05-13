@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
 interface Message {
   role: "user" | "assistant";
   content: string;
@@ -38,7 +40,7 @@ export default function RecommendChat({ isOpen, onClose }: Props) {
     setMessages((prev) => [...prev, userMsg, assistantMsg]);
 
     try {
-      const res = await fetch("http://localhost:8000/api/recommend", {
+      const res = await fetch(`${API_URL}/api/recommend`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query }),

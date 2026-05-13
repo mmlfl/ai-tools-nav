@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getGuideSlugs, getGuideContent, getComparePagesForTool } from "@/lib/content";
 import ToolCard from "@/components/ToolCard";
+import BackLink from "@/components/BackLink";
 import { BreadcrumbList, Article } from "@/components/StructuredData";
 
 const BASE_URL = "https://lflaitool.top";
@@ -50,15 +51,7 @@ export default async function GuidePage({ params }: Props) {
       />
       <Article page={{ ...page.frontmatter, slug }} />
       <div className="mx-auto max-w-3xl px-4 py-12">
-        <Link
-          href="/"
-          className="mb-8 inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100"
-        >
-          <svg suppressHydrationWarning className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-            <path d="M19 12H5m7-7l-7 7 7 7" />
-          </svg>
-          返回首页
-        </Link>
+        <BackLink />
 
         <article className="prose prose-zinc dark:prose-invert max-w-none">
           <h1>{page.frontmatter.title}</h1>

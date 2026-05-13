@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Tool, CATEGORY_LABELS, PRICING_LABELS } from "@/types/tool";
 import toolsData from "@/data/tools.json";
 import ToolCard from "@/components/ToolCard";
+import BackLink from "@/components/BackLink";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BreadcrumbList, SoftwareApplication } from "@/components/StructuredData";
@@ -11,6 +12,11 @@ const BASE_URL = "https://lflaitool.top";
 
 interface Props {
   params: Promise<{ slug: string }>;
+}
+
+export function generateStaticParams() {
+  const tools = toolsData as Tool[];
+  return tools.map((t) => ({ slug: t.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -59,15 +65,7 @@ export default async function ToolDetailPage({ params }: Props) {
       />
       <SoftwareApplication tool={tool} />
       <div className="mx-auto max-w-3xl px-4 py-12">
-        <Link
-          href="/"
-          className="mb-8 inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100"
-        >
-          <svg suppressHydrationWarning className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-            <path d="M19 12H5m7-7l-7 7 7 7" />
-          </svg>
-          返回首页
-        </Link>
+        <BackLink />
 
         <article className="rounded-2xl border border-zinc-200/80 bg-white p-8 dark:border-zinc-800/80 dark:bg-zinc-900">
           <div className="flex items-start gap-5">
