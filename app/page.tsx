@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Tool as ToolType } from "@/types/tool";
 import toolsData from "@/data/tools.json";
 import ToolGrid from "@/components/ToolGrid";
+import CompareSection from "@/components/CompareSection";
 import { BreadcrumbList } from "@/components/StructuredData";
 
 export const metadata: Metadata = {
@@ -32,6 +33,8 @@ export default function Home() {
         </section>
 
         <ToolGrid tools={tools} />
+
+        <CompareSection />
       </div>
     </>
   );
