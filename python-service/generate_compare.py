@@ -48,9 +48,9 @@ date: "{today}"
 
 ## 概述
 ...
-""").partial(today=str(date.today())),
+"""),
     ("user", "请为以下两个工具写对比文章：\n\n工具1：{tool1}\n工具2：{tool2}\n\n分类：{category}")
-])
+]).partial(today=str(date.today()))
 
 
 def load_tools():

@@ -4,22 +4,72 @@
       "slug": "chatgpt-vs-claude",
       "title": "ChatGPT vs Claude：2026年全面对比评测",
       "description": "详细对比 ChatGPT 和 Claude 的功能、价格、适用场景，帮你选择最合适的 AI 对话工具",
-      "tools": ["chatgpt", "claude"],
+      "tools": [
+        "chatgpt",
+        "claude"
+      ],
       "date": "2026-05-13"
     },
-    {
-      "slug": "midjourney-vs-dalle",
-      "title": "Midjourney vs DALL·E 3：2026年AI图像生成工具全面对比",
-      "description": "从画质、速度、价格、易用性角度对比 Midjourney 和 DALL·E 3 两大 AI 图像生成工具，帮你找到最适合的创作伙伴",
-      "tools": ["midjourney", "dall-e"],
-      "date": "2026-05-13"
-    },
-    {
+
+{
       "slug": "github-copilot-vs-cursor",
       "title": "GitHub Copilot vs Cursor：2026年AI编程助手全面对比",
       "description": "对比 GitHub Copilot 和 Cursor 两大 AI 编程工具的功能、定价和适用场景，帮助开发者选择最佳代码助手",
-      "tools": ["github-copilot", "cursor"],
+      "tools": [
+        "github-copilot",
+        "cursor"
+      ],
       "date": "2026-05-13"
+    },
+    {
+      "slug": "midjourney-vs-dall-e",
+      "title": "Midjourney vs DALL·E 3：2026年全面对比评测",
+      "description": "深入对比 Midjourney 与 DALL·E 3 在图像生成能力、提示理解、艺术风格、价格及适用场景等方面的差异，助你选择最适合的 AI 图像工具。",
+      "tools": [
+        "midjourney",
+        "dall-e"
+      ],
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "sora-vs-runway",
+      "title": "Sora vs Runway：2026年全面对比评测",
+      "description": "深入对比 OpenAI 的 Sora 与 Runway 在视频生成、编辑功能、价格策略及适用场景等方面的差异，助你选择最适合的 AI 视频创作工具。",
+      "tools": [
+        "sora",
+        "runway"
+      ],
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "elevenlabs-vs-suno",
+      "title": "ElevenLabs vs Suno：2026年全面对比评测",
+      "description": "详细对比 ElevenLabs 与 Suno 这两款热门 AI 音频工具的功能、价格与适用场景，帮助你选择最适合的语音或音乐生成平台。",
+      "tools": [
+        "elevenlabs",
+        "suno"
+      ],
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "notion-ai-vs-gamma",
+      "title": "Notion AI vs Gamma：2026年全面对比评测",
+      "description": "深入对比 Notion AI 与 Gamma 在办公场景下的核心功能、价格策略与适用场景，助你选择最适合的 AI 办公工具",
+      "tools": [
+        "notion-ai",
+        "gamma"
+      ],
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "perplexity-vs-consensus",
+      "title": "Perplexity vs Consensus：2026年全面对比评测",
+      "description": "深入对比 Perplexity 与 Consensus 这两款 AI 搜索引擎，在研究、事实查询和学术探索方面的功能、价格与适用场景，助你选出最适合的工具。",
+      "tools": [
+        "perplexity",
+        "consensus"
+      ],
+      "date": "2026-04-27"
     }
   ],
   "list": [],
