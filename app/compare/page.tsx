@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { getAllComparePages } from "@/lib/content";
 import { BreadcrumbList } from "@/components/StructuredData";
+import SearchableGrid from "@/components/SearchableGrid";
 
 const BASE_URL = "https://lflaitool.top";
 
@@ -17,6 +17,14 @@ export const metadata: Metadata = {
 export default function CompareListPage() {
   const pages = getAllComparePages();
 
+  const items = pages.map((p) => ({
+    slug: p.slug,
+    title: p.frontmatter.title,
+    description: p.frontmatter.description,
+    date: p.frontmatter.date,
+    keywords: p.frontmatter.tools,
+  }));
+
   return (
     <>
       <BreadcrumbList
@@ -26,7 +34,7 @@ export default function CompareListPage() {
         ]}
       />
       <div className="mx-auto max-w-6xl px-4 py-12">
-        <section className="mb-10">
+        <section className="mb-8">
           <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-4xl">
             工具对比
           </h1>
@@ -35,29 +43,13 @@ export default function CompareListPage() {
           </p>
         </section>
 
-        {pages.length === 0 ? (
-          <p className="text-zinc-500">暂无对比文章</p>
-        ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {pages.map((p) => (
-              <Link
-                key={p.slug}
-                href={`/compare/${p.slug}`}
-                className="group rounded-xl border border-zinc-200/80 bg-white p-5 transition hover:border-zinc-300 hover:shadow-md dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:border-zinc-700"
-              >
-                <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400">
-                  {p.frontmatter.title}
-                </h3>
-                <p className="mt-1 line-clamp-2 text-sm text-zinc-500 dark:text-zinc-400">
-                  {p.frontmatter.description}
-                </p>
-                <span className="mt-3 inline-block text-xs text-zinc-400 dark:text-zinc-500">
-                  {p.frontmatter.date}
-                </span>
-              </Link>
-            ))}
-          </div>
-        )}
+        <SearchableGrid
+          items={items}
+          basePath="/compare"
+          placeholder="搜索工具名，例如 ChatGPT、Claude…"
+          emptyText="暂无对比文章"
+          noMatchText="没有匹配的对比文章"
+        />
       </div>
     </>
   );
