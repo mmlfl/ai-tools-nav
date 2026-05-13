@@ -21,13 +21,13 @@ async def recommend(request: Request):
         body = await request.json()
     except Exception:
         return StreamingResponse(
-            iter(["data: " + json.dumps({"error": "invalid JSON body"}, ensure_ascii=False) + "\n\n"]),
+            iter(["data: " + json.dumps({"token": "请求格式错误，请重试。"}, ensure_ascii=False) + "\n\n"]),
             media_type="text/event-stream",
         )
     query = body.get("query", "")
     if not query:
         return StreamingResponse(
-            iter(["data: " + json.dumps({"error": "query is required"}, ensure_ascii=False) + "\n\n"]),
+            iter(["data: " + json.dumps({"token": "请提供您的问题。"}, ensure_ascii=False) + "\n\n"]),
             media_type="text/event-stream",
         )
 
@@ -36,7 +36,7 @@ async def recommend(request: Request):
             async for token in recommend_stream(query):
                 yield f"data: {json.dumps({'token': token}, ensure_ascii=False)}\n\n"
         except Exception:
-            yield f"data: {json.dumps({'error': 'streaming failed'}, ensure_ascii=False)}\n\n"
+            yield f"data: {json.dumps({'token': '推荐服务暂时不可用，请稍后再试。'}, ensure_ascii=False)}\n\n"
         finally:
             yield "data: [DONE]\n\n"
 

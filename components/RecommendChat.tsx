@@ -60,15 +60,18 @@ export default function RecommendChat({ isOpen, onClose }: Props) {
             const data = line.slice(6);
             if (data === "[DONE]") continue;
             try {
-              const { token } = JSON.parse(data);
-              setMessages((prev) => {
-                const copy = [...prev];
-                copy[copy.length - 1] = {
-                  ...copy[copy.length - 1],
-                  content: copy[copy.length - 1].content + token,
-                };
-                return copy;
-              });
+              const parsed = JSON.parse(data);
+              const text = parsed.token ?? parsed.error ?? "";
+              if (text) {
+                setMessages((prev) => {
+                  const copy = [...prev];
+                  copy[copy.length - 1] = {
+                    ...copy[copy.length - 1],
+                    content: copy[copy.length - 1].content + text,
+                  };
+                  return copy;
+                });
+              }
             } catch {}
           }
         }
