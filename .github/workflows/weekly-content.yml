@@ -1,0 +1,37 @@
+name: Weekly Content Generation
+
+on:
+  schedule:
+    - cron: "37 8 * * 1"   # Every Monday ~8:37 UTC
+  workflow_dispatch:         # Manual trigger from GitHub UI
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r python-service/requirements.txt
+      - run: python python-service/generate_compare.py
+        env:
+          QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
+          QWEN_BASE_URL: ${{ secrets.QWEN_BASE_URL }}
+      - run: python python-service/generate_guide.py
+        env:
+          QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
+          QWEN_BASE_URL: ${{ secrets.QWEN_BASE_URL }}
+      - name: Commit and push
+        run: |
+          git config user.name "AI Content Bot"
+          git config user.email "bot@lflaitool.top"
+          git add content/ data/content-index.json
+          if git diff --cached --quiet; then
+            echo "No new content generated"
+          else
+            git commit -m "auto: weekly content ($(date +%Y-%m-%d))"
+            git push
+          fi
