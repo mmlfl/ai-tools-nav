@@ -10,6 +10,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticPages = [
     { url: BASE_URL, lastModified: new Date(), changeFrequency: "daily" as const, priority: 1 },
+    { url: `${BASE_URL}/tools`, lastModified: new Date(), changeFrequency: "daily" as const, priority: 0.9 },
+    { url: `${BASE_URL}/compare`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 },
+    { url: `${BASE_URL}/guide`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 },
     { url: `${BASE_URL}/category/chat`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 },
     { url: `${BASE_URL}/category/image`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 },
     { url: `${BASE_URL}/category/video`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 },
