@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI 一站式速通
 
-## Getting Started
+[**lflaitool.top**](https://lflaitool.top)
 
-First, run the development server:
+AI 工具导航、深度对比、使用指南，一站式搞定 AI。
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 网站功能
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🧭 AI 工具导航
+精选 20+ 优质 AI 工具，覆盖 7 大分类（对话、图像、视频、编程、音频、办公、搜索）。支持按分类和价格快速筛选。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### ⚡ 工具对比
+深度对比主流 AI 工具的功能、价格和适用场景。涵盖 ChatGPT、Claude、Midjourney、DALL·E、GitHub Copilot、Cursor 等热门工具的横向评测。
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 📖 使用指南
+为每款工具提供详细的使用教程，从入门到精通，包含核心功能、操作步骤、价格说明和适用场景。
 
-## Learn More
+## 技术栈
 
-To learn more about Next.js, take a look at the following resources:
+- **前端**: Next.js 16 + TypeScript + Tailwind CSS v4
+- **内容生成**: Python + LangChain + 阿里千问 API
+- **自动化**: GitHub Actions 每周定时生成新内容
+- **部署**: Vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 网站地址
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+👉 **[lflaitool.top](https://lflaitool.top)**
