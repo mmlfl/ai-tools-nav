@@ -10,8 +10,7 @@
       ],
       "date": "2026-05-13"
     },
-
-{
+    {
       "slug": "github-copilot-vs-cursor",
       "title": "GitHub Copilot vs Cursor：2026年AI编程助手全面对比",
       "description": "对比 GitHub Copilot 和 Cursor 两大 AI 编程工具的功能、定价和适用场景，帮助开发者选择最佳代码助手",
@@ -70,8 +69,289 @@
         "consensus"
       ],
       "date": "2026-04-27"
+    },
+    {
+      "slug": "chatgpt-vs-gemini",
+      "title": "ChatGPT vs Gemini：2026年全面对比评测",
+      "description": "详细对比 ChatGPT 和 Gemini 的功能、价格、适用场景，帮助你选择最合适的 AI 对话工具",
+      "tools": [
+        "chatgpt",
+        "gemini"
+      ],
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "claude-vs-gemini",
+      "title": "Claude vs Gemini：2026年全面对比评测",
+      "description": "深入对比 Anthropic 的 Claude 与 Google 的 Gemini，从功能、价格到适用场景，助你选择最适合的 AI 助手",
+      "tools": [
+        "claude",
+        "gemini"
+      ],
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "midjourney-vs-stable-diffusion",
+      "title": "Midjourney vs Stable Diffusion：2026年全面对比评测",
+      "description": "深入对比 Midjourney 与 Stable Diffusion 在图像生成能力、使用方式、价格和适用场景等方面的差异，助你选择最适合的 AI 图像生成工具。",
+      "tools": [
+        "midjourney",
+        "stable-diffusion"
+      ],
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "midjourney-vs-leonardo",
+      "title": "Midjourney vs Leonardo.ai：2026年全面对比评测",
+      "description": "深入对比 Midjourney 与 Leonardo.ai 在图像生成能力、功能特性、价格策略及适用场景上的差异，帮助设计师、艺术家和游戏开发者选择最适合的 AI 工具。",
+      "tools": [
+        "midjourney",
+        "leonardo"
+      ],
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "dall-e-vs-stable-diffusion",
+      "title": "DALL·E 3 vs Stable Diffusion：2026年全面对比评测",
+      "description": "深入对比 OpenAI 的 DALL·E 3 与开源模型 Stable Diffusion 在图像生成能力、使用门槛、价格和适用场景等方面的差异，助你选择最适合的 AI 绘图工具。",
+      "tools": [
+        "dall-e",
+        "stable-diffusion"
+      ],
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "dall-e-vs-leonardo",
+      "title": "DALL·E 3 vs Leonardo.ai：2026年全面对比评测",
+      "description": "深入对比 OpenAI 的 DALL·E 3 与 Leonardo.ai 在图像生成能力、价格策略及适用场景上的异同，帮助设计师、创作者和开发者做出明智选择。",
+      "tools": [
+        "dall-e",
+        "leonardo"
+      ],
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "stable-diffusion-vs-leonardo",
+      "title": "Stable Diffusion vs Leonardo.ai：2026年全面对比评测",
+      "description": "深入对比开源图像生成模型 Stable Diffusion 与面向游戏和设计领域的 Leonardo.ai，从功能、价格到适用场景全方位解析，助你选择最适合的 AI 图像生成工具。",
+      "tools": [
+        "stable-diffusion",
+        "leonardo"
+      ],
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "github-copilot-vs-vercel-v0",
+      "title": "GitHub Copilot vs v0 by Vercel：2026年全面对比评测",
+      "description": "深入对比 GitHub Copilot 与 Vercel v0 的功能、价格与适用场景，帮助开发者选择最适合的 AI 编程工具",
+      "tools": [
+        "github-copilot",
+        "vercel-v0"
+      ],
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "github-copilot-vs-windsurf",
+      "title": "GitHub Copilot vs Windsurf：2026年全面对比评测",
+      "description": "深入对比 GitHub Copilot 与 Windsurf 这两款 AI 编程工具的功能、价格与适用场景，帮助开发者选择最适合自己的智能编码助手。",
+      "tools": [
+        "github-copilot",
+        "windsurf"
+      ],
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "cursor-vs-vercel-v0",
+      "title": "Cursor vs v0 by Vercel：2026年全面对比评测",
+      "description": "深入对比 Cursor 与 v0 by Vercel 这两款 AI 驱动的开发工具，从功能、价格到适用场景，助你选择最适合的编码助手。",
+      "tools": [
+        "cursor",
+        "vercel-v0"
+      ],
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "cursor-vs-windsurf",
+      "title": "Cursor vs Windsurf：2026年全面对比评测",
+      "description": "深入对比 Cursor 与 Windsurf 这两款 AI 原生代码编辑器，在功能、价格、适用场景等方面的差异，帮助开发者选择最适合自己的智能编程工具。",
+      "tools": [
+        "cursor",
+        "windsurf"
+      ],
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "vercel-v0-vs-windsurf",
+      "title": "v0 by Vercel vs Windsurf：2026年全面对比评测",
+      "description": "深入对比 v0 by Vercel 与 Windsurf 这两款 AI 编程工具在 UI 生成、多文件编辑、上下文理解等方面的能力，帮助开发者选择最适合自己的 AI 开发助手。",
+      "tools": [
+        "vercel-v0",
+        "windsurf"
+      ],
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "notion-ai-vs-jasper",
+      "title": "Notion AI vs Jasper：2026年全面对比评测",
+      "description": "深入对比 Notion AI 与 Jasper 在办公场景下的功能、价格与适用性，帮助你选择最适合的 AI 写作与内容创作工具。",
+      "tools": [
+        "notion-ai",
+        "jasper"
+      ],
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "gamma-vs-jasper",
+      "title": "Gamma vs Jasper：2026年全面对比评测",
+      "description": "详细对比 Gamma 和 Jasper 的功能、价格与适用场景，帮助你选择最适合的 AI 办公工具——一个专注演示文稿与文档，一个专精营销内容创作。",
+      "tools": [
+        "gamma",
+        "jasper"
+      ],
+      "date": "2026-05-13"
     }
   ],
   "list": [],
-  "guide": []
+  "guide": [
+    {
+      "slug": "chatgpt",
+      "title": "ChatGPT 完整使用指南：从入门到精通",
+      "description": "详细介绍 ChatGPT 的核心功能、使用方法、定价策略及适用场景，帮助你充分发挥这款 AI 对话工具的潜力",
+      "tool": "chatgpt",
+      "date": "2024-06-15"
+    },
+    {
+      "slug": "claude",
+      "title": "Claude 完整使用指南：从入门到精通",
+      "description": "全面介绍 Anthropic 开发的 AI 助手 Claude 的核心功能、使用方法、定价策略及适用场景，助你高效处理长文本分析、代码审查与复杂推理任务。",
+      "tool": "claude",
+      "date": "2024-06-15"
+    },
+    {
+      "slug": "gemini",
+      "title": "Gemini 完整使用指南：从入门到精通",
+      "description": "全面解析 Google Gemini 的核心功能、使用方法、定价策略及适用场景，助你高效利用这款深度集成 Google 生态的多模态 AI 工具",
+      "tool": "gemini",
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "midjourney",
+      "title": "Midjourney 完整使用指南：从入门到精通",
+      "description": "详细介绍 Midjourney 的核心功能、使用方法、定价策略及适用场景，帮助你充分发挥这款顶级 AI 图像生成工具的艺术创作潜力",
+      "tool": "midjourney",
+      "date": "2024-06-15"
+    },
+    {
+      "slug": "dall-e",
+      "title": "DALL·E 3 完整使用指南：从入门到精通",
+      "description": "全面解析 OpenAI 最新图像生成模型 DALL·E 3 的功能、使用方法、定价策略及适用场景，助你高效创作高质量 AI 图像",
+      "tool": "dall-e",
+      "date": "2024-06-15"
+    },
+    {
+      "slug": "stable-diffusion",
+      "title": "Stable Diffusion 完整使用指南：从入门到精通",
+      "description": "全面介绍 Stable Diffusion 的核心功能、本地部署方法、提示词技巧、模型管理及适用场景，助你高效生成高质量 AI 图像",
+      "tool": "stable-diffusion",
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "sora",
+      "title": "Sora 完整使用指南：从入门到精通",
+      "description": "全面解析 OpenAI 的文字转视频模型 Sora，涵盖核心功能、使用方法、定价策略及适用场景，助你高效生成高质量视频内容",
+      "tool": "sora",
+      "date": "2024-06-15"
+    },
+    {
+      "slug": "runway",
+      "title": "Runway 完整使用指南：从入门到精通",
+      "description": "全面解析 Runway AI 视频编辑与生成平台的核心功能、操作流程、定价方案及适用场景，助你高效创作专业级视频内容",
+      "tool": "runway",
+      "date": "2024-06-15"
+    },
+    {
+      "slug": "github-copilot",
+      "title": "GitHub Copilot 完整使用指南：从入门到精通",
+      "description": "详细介绍 GitHub Copilot 的核心功能、使用方法、定价策略及适用场景，帮助开发者高效编写代码",
+      "tool": "github-copilot",
+      "date": "2024-06-15"
+    },
+    {
+      "slug": "cursor",
+      "title": "Cursor 完整使用指南：从入门到精通",
+      "description": "详细介绍 Cursor 的核心功能、使用方法、定价策略及适用场景，帮助开发者高效利用这款 AI 优先的代码编辑器提升编程效率",
+      "tool": "cursor",
+      "date": "2024-06-15"
+    },
+    {
+      "slug": "vercel-v0",
+      "title": "v0 by Vercel 完整使用指南：从入门到精通",
+      "description": "详细介绍 v0 by Vercel 的核心功能、使用方法、定价策略及适用场景，帮助前端开发者通过自然语言快速生成高质量 React UI 代码",
+      "tool": "vercel-v0",
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "elevenlabs",
+      "title": "ElevenLabs 完整使用指南：从入门到精通",
+      "description": "全面介绍 ElevenLabs 的核心功能、操作步骤、定价方案及适用场景，助你高效利用这款领先的 AI 语音合成与声音克隆工具",
+      "tool": "elevenlabs",
+      "date": "2024-06-15"
+    },
+    {
+      "slug": "suno",
+      "title": "Suno 完整使用指南：从入门到精通",
+      "description": "详细介绍 Suno AI 音乐生成工具的核心功能、操作步骤、定价方案及适用场景，帮助你通过文字轻松创作完整歌曲",
+      "tool": "suno",
+      "date": "2024-06-15"
+    },
+    {
+      "slug": "notion-ai",
+      "title": "Notion AI 完整使用指南：从入门到精通",
+      "description": "全面解析 Notion AI 的核心功能、操作方法、定价方案与适用场景，助你高效写作、总结与协作",
+      "tool": "notion-ai",
+      "date": "2024-06-15"
+    },
+    {
+      "slug": "gamma",
+      "title": "Gamma 完整使用指南：从入门到精通",
+      "description": "详细介绍 Gamma 的核心功能、使用方法、定价策略及适用场景，帮助你快速创建 AI 驱动的精美演示文稿与网页文档",
+      "tool": "gamma",
+      "date": "2024-06-15"
+    },
+    {
+      "slug": "perplexity",
+      "title": "Perplexity 完整使用指南：从入门到精通",
+      "description": "详细介绍 Perplexity AI 搜索引擎的核心功能、使用方法、定价策略及适用场景，帮助你高效获取带引用来源的准确信息",
+      "tool": "perplexity",
+      "date": "2024-06-15"
+    },
+    {
+      "slug": "consensus",
+      "title": "Consensus 完整使用指南：从入门到精通",
+      "description": "详细介绍 Consensus 的核心功能、使用方法、定价策略及适用场景，帮助你高效获取科研论文中的关键发现",
+      "tool": "consensus",
+      "date": "2025-04-05"
+    },
+    {
+      "slug": "jasper",
+      "title": "Jasper 完整使用指南：从入门到精通",
+      "description": "全面解析 Jasper AI 内容创作平台的核心功能、操作流程、定价方案及适用场景，助你高效产出高质量营销文案",
+      "tool": "jasper",
+      "date": "2024-06-15"
+    },
+    {
+      "slug": "windsurf",
+      "title": "Windsurf 完整使用指南：从入门到精通",
+      "description": "详细介绍 Codeium 推出的 AI IDE Windsurf 的核心功能、使用方法、定价策略及适用场景，助你高效进行多文件上下文感知的代码开发",
+      "tool": "windsurf",
+      "date": "2026-05-13"
+    },
+    {
+      "slug": "leonardo",
+      "title": "Leonardo.ai 完整使用指南：从入门到精通",
+      "description": "全面介绍 Leonardo.ai 的核心功能、操作流程、定价方案及适用场景，帮助游戏开发者与数字艺术家高效生成高质量 AI 图像资产",
+      "tool": "leonardo",
+      "date": "2024-06-18"
+    }
+  ]
 }

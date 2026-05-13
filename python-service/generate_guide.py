@@ -24,7 +24,7 @@ GUIDE_PROMPT = ChatPromptTemplate.from_messages([
     ("system", """你是一个专业的 AI 工具使用教程写手。根据提供的工具信息，写一篇详细的工具使用指南。
 
 要求：
-1. 标题格式: "{工具名} 完整使用指南：从入门到精通"
+1. 标题格式: "{{工具名}} 完整使用指南：从入门到精通"
 2. 正文使用 Markdown 格式，必须以 YAML frontmatter 开头
 3. YAML frontmatter 包含: title, description, tool (单个工具slug), date (今日日期)
 4. 正文结构:
