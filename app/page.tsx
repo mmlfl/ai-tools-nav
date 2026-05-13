@@ -3,6 +3,7 @@ import { Tool as ToolType } from "@/types/tool";
 import toolsData from "@/data/tools.json";
 import ToolGrid from "@/components/ToolGrid";
 import CompareSection from "@/components/CompareSection";
+import GuideSection from "@/components/GuideSection";
 import { BreadcrumbList } from "@/components/StructuredData";
 
 export const metadata: Metadata = {
@@ -35,6 +36,8 @@ export default function Home() {
         <ToolGrid tools={tools} />
 
         <CompareSection />
+
+        <GuideSection />
       </div>
     </>
   );
