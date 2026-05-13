@@ -47,3 +47,19 @@ export interface ComparePage {
   html: string;
   relatedTools: Tool[];
 }
+
+export interface GuideFrontmatter {
+  title: string;
+  description: string;
+  tool: string;            // single tool slug
+  date: string;
+  featured?: boolean;
+}
+
+export interface GuidePage {
+  slug: string;
+  frontmatter: GuideFrontmatter;
+  content: string;
+  html: string;
+  tool: Tool | undefined;  // resolved from frontmatter.tool
+}
