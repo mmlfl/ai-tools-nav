@@ -43,6 +43,7 @@ export default function RecommendChat({ isOpen, onClose }: Props) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query }),
       });
+      if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
       const reader = res.body?.getReader();
       if (!reader) throw new Error("No reader");
       const decoder = new TextDecoder();
