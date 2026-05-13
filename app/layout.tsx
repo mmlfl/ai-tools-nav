@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import { WebSite } from "@/components/StructuredData";
+import ChatProvider from "@/components/ChatProvider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -67,6 +68,7 @@ export default function RootLayout({
             &copy; {new Date().getFullYear()} AI Tools Nav - AI 工具导航
           </div>
         </footer>
+        <ChatProvider />
       </body>
     </html>
   );
