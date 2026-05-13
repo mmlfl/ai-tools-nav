@@ -1,3 +1,4 @@
+import functools
 import os
 from typing import AsyncIterator
 from dotenv import load_dotenv
@@ -30,11 +31,15 @@ Write naturally in Chinese, as a conversation. Structure your recommendation wit
 """
 
 
+@functools.lru_cache(maxsize=1)
 def create_recommend_agent():
+    api_key = os.getenv("QWEN_API_KEY")
+    if not api_key:
+        raise RuntimeError("QWEN_API_KEY 未设置，请在 .env 文件中配置 QWEN_API_KEY")
     llm = ChatOpenAI(
         model=os.getenv("QWEN_MODEL", "qwen-plus"),
         base_url=os.getenv("QWEN_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1"),
-        api_key=os.getenv("QWEN_API_KEY"),
+        api_key=api_key,
         temperature=0.7,
         streaming=True,
     )
@@ -43,13 +48,16 @@ def create_recommend_agent():
 
 
 async def recommend_stream(query: str) -> AsyncIterator[str]:
-    agent = create_recommend_agent()
-    async for event in agent.astream_events(
-        {"messages": [HumanMessage(content=query)]},
-        version="v2",
-    ):
-        kind = event.get("event")
-        if kind == "on_chat_model_stream":
-            chunk = event.get("data", {}).get("chunk")
-            if chunk and chunk.content:
-                yield chunk.content
+    try:
+        agent = create_recommend_agent()
+        async for event in agent.astream_events(
+            {"messages": [HumanMessage(content=query)]},
+            version="v2",
+        ):
+            kind = event.get("event")
+            if kind == "on_chat_model_stream":
+                chunk = event.get("data", {}).get("chunk")
+                if chunk and chunk.content:
+                    yield chunk.content
+    except Exception:
+        yield "抱歉，AI 服务暂时不可用，请稍后重试。"
