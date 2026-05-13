@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Tool Comparison Article Generator.
-Reads tools.json, generates comparison Markdown via LangChain + OpenAI,
+Reads tools.json, generates comparison Markdown via LangChain + Qwen (阿里千问),
 writes to ../content/compare/
 """
 import json
@@ -59,7 +59,12 @@ def load_tools():
 
 
 def generate_compare(tool1, tool2, category):
-    llm = ChatOpenAI(model="gpt-4o", temperature=0.7)
+    llm = ChatOpenAI(
+        model=os.getenv("QWEN_MODEL", "qwen-plus"),
+        base_url=os.getenv("QWEN_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1"),
+        api_key=os.getenv("QWEN_API_KEY"),
+        temperature=0.7,
+    )
     messages = COMPARE_PROMPT.format_messages(
         tool1=json.dumps(tool1, ensure_ascii=False, indent=2),
         tool2=json.dumps(tool2, ensure_ascii=False, indent=2),
@@ -118,8 +123,8 @@ def parse_frontmatter(content):
 
 
 def main():
-    if not os.getenv("OPENAI_API_KEY"):
-        print("Error: OPENAI_API_KEY not set. Create python-service/.env with your API key.", file=sys.stderr)
+    if not os.getenv("QWEN_API_KEY"):
+        print("Error: QWEN_API_KEY not set. Create python-service/.env with your API key.", file=sys.stderr)
         sys.exit(1)
 
     tools = load_tools()
