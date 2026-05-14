@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 
 export interface SearchableItem {
@@ -9,6 +9,7 @@ export interface SearchableItem {
   description: string;
   date: string;
   keywords: string[];
+  categories?: string[];
 }
 
 interface Props {
@@ -17,6 +18,7 @@ interface Props {
   placeholder?: string;
   emptyText?: string;
   noMatchText?: string;
+  categoryLabels?: Record<string, string>;
 }
 
 export default function SearchableGrid({
@@ -25,25 +27,64 @@ export default function SearchableGrid({
   placeholder = "搜索工具名...",
   emptyText = "暂无内容",
   noMatchText = "没有匹配的结果",
+  categoryLabels,
 }: Props) {
   const [search, setSearch] = useState("");
+  const [category, setCategory] = useState<string | null>(null);
 
-  const filtered = search.trim()
-    ? items.filter((item) => {
-        const q = search.toLowerCase();
-        const haystack = [
-          item.title,
-          item.description,
-          ...item.keywords,
-        ]
+  const availableCategories = useMemo(() => {
+    const cats = new Set<string>();
+    items.forEach((item) => item.categories?.forEach((c) => cats.add(c)));
+    return Array.from(cats);
+  }, [items]);
+
+  const filtered = useMemo(() => {
+    let result = items;
+    if (category) {
+      result = result.filter((item) => item.categories?.includes(category));
+    }
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      result = result.filter((item) => {
+        const haystack = [item.title, item.description, ...item.keywords]
           .join(" ")
           .toLowerCase();
         return haystack.includes(q);
-      })
-    : items;
+      });
+    }
+    return result;
+  }, [items, search, category]);
 
   return (
     <>
+      {availableCategories.length > 1 && (
+        <div className="mb-4 flex flex-wrap gap-2">
+          <button
+            onClick={() => setCategory(null)}
+            className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
+              category === null
+                ? "bg-gradient-to-r from-blue-500 to-violet-500 text-white shadow-sm shadow-blue-200 dark:shadow-blue-900/30"
+                : "bg-zinc-100 text-zinc-600 hover:bg-blue-50 hover:text-blue-600 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-blue-950 dark:hover:text-blue-400"
+            }`}
+          >
+            全部
+          </button>
+          {availableCategories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setCategory(cat === category ? null : cat)}
+              className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
+                category === cat
+                  ? "bg-gradient-to-r from-blue-500 to-violet-500 text-white shadow-sm shadow-blue-200 dark:shadow-blue-900/30"
+                  : "bg-zinc-100 text-zinc-600 hover:bg-blue-50 hover:text-blue-600 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-blue-950 dark:hover:text-blue-400"
+              }`}
+            >
+              {categoryLabels?.[cat] ?? cat}
+            </button>
+          ))}
+        </div>
+      )}
+
       {items.length > 3 && (
         <div className="mb-6">
           <input
@@ -82,7 +123,7 @@ export default function SearchableGrid({
         </div>
       )}
 
-      {search.trim() && filtered.length > 0 && (
+      {(search.trim() || category) && filtered.length > 0 && (
         <p className="mt-4 text-xs text-zinc-400 dark:text-zinc-500">
           找到 {filtered.length} 条匹配结果
         </p>

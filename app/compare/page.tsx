@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getAllComparePages } from "@/lib/content";
+import { CATEGORY_LABELS } from "@/types/tool";
 import { BreadcrumbList } from "@/components/StructuredData";
 import BackLink from "@/components/BackLink";
 import SearchableGrid from "@/components/SearchableGrid";
@@ -24,6 +25,7 @@ export default function CompareListPage() {
     description: p.frontmatter.description,
     date: p.frontmatter.date,
     keywords: p.frontmatter.tools,
+    categories: p.relatedTools.map((t) => t.category),
   }));
 
   return (
@@ -51,6 +53,7 @@ export default function CompareListPage() {
           placeholder="搜索工具名，例如 ChatGPT、Claude…"
           emptyText="暂无对比文章"
           noMatchText="没有匹配的对比文章"
+          categoryLabels={CATEGORY_LABELS}
         />
       </div>
     </>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getAllGuidePages } from "@/lib/content";
+import { CATEGORY_LABELS } from "@/types/tool";
 import { BreadcrumbList } from "@/components/StructuredData";
 import BackLink from "@/components/BackLink";
 import SearchableGrid from "@/components/SearchableGrid";
@@ -24,6 +25,7 @@ export default function GuideListPage() {
     description: p.frontmatter.description,
     date: p.frontmatter.date,
     keywords: [p.frontmatter.tool],
+    categories: p.tool ? [p.tool.category] : [],
   }));
 
   return (
@@ -51,6 +53,7 @@ export default function GuideListPage() {
           placeholder="搜索工具名，例如 Midjourney、Sora…"
           emptyText="暂无使用指南"
           noMatchText="没有匹配的使用指南"
+          categoryLabels={CATEGORY_LABELS}
         />
       </div>
     </>
