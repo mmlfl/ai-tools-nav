@@ -29,13 +29,20 @@ export default function Home() {
       />
       <div className="mx-auto max-w-5xl px-4 py-16 sm:py-24">
         {/* Hero */}
-        <section className="text-center mb-16">
-          <h1 className="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-5xl">
-            AI 一站式速通
-          </h1>
-          <p className="mt-4 text-lg text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto">
-            从选工具到用工具，一站式搞定 AI。精选 20+ 优质 AI 工具，提供深度对比评测与详细使用教程。
-          </p>
+        <section className="relative mb-16 overflow-hidden rounded-3xl bg-gradient-to-br from-blue-50 via-white to-violet-50 px-8 py-16 text-center dark:from-blue-950/30 dark:via-zinc-900 dark:to-violet-950/30">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(37,99,235,0.08),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(124,58,237,0.06),transparent_50%)]" />
+          <div className="relative">
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+              <span className="bg-gradient-to-r from-blue-600 via-violet-500 to-blue-600 bg-clip-text text-transparent">
+                AI 一站式速通
+              </span>
+            </h1>
+            <p className="mt-4 text-lg text-zinc-600 dark:text-zinc-300 max-w-2xl mx-auto">
+              从选工具到用工具，一站式搞定 AI。精选
+              <span className="font-semibold text-blue-600 dark:text-blue-400"> 20+ </span>
+              优质 AI 工具，提供深度对比评测与详细使用教程。
+            </p>
+          </div>
         </section>
 
         {/* Module Cards */}

@@ -80,7 +80,7 @@ export default async function ToolDetailPage({ params }: Props) {
 
           <div className="mt-6 flex flex-wrap gap-4">
             <div className="flex flex-wrap gap-2">
-              <span className="rounded-md bg-zinc-100 px-3 py-1 text-sm text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400">
+              <span className="rounded-md bg-blue-50 px-3 py-1 text-sm font-medium text-blue-600 dark:bg-blue-950 dark:text-blue-400">
                 {CATEGORY_LABELS[tool.category]}
               </span>
               {tool.tags.map((tag) => (
@@ -101,7 +101,7 @@ export default async function ToolDetailPage({ params }: Props) {
             href={tool.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 inline-flex items-center gap-2 rounded-lg bg-zinc-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
+            className="mt-8 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 to-violet-500 px-6 py-3 text-sm font-medium text-white transition hover:from-blue-600 hover:to-violet-600 shadow-sm shadow-blue-200 dark:shadow-blue-900/30"
           >
             访问官网
             <svg suppressHydrationWarning className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">

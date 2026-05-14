@@ -42,7 +42,10 @@ export default function RecommendChat({ isOpen, onClose }: Props) {
     try {
       const res = await fetch(`${API_URL}/api/recommend`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-Key": process.env.NEXT_PUBLIC_API_KEY || "",
+        },
         body: JSON.stringify({ query }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
@@ -163,7 +166,7 @@ export default function RecommendChat({ isOpen, onClose }: Props) {
           <button
             onClick={sendMessage}
             disabled={streaming || !input.trim()}
-            className="rounded-lg bg-zinc-900 px-3 py-2 text-sm text-white transition-colors hover:bg-zinc-700 disabled:opacity-40 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+            className="rounded-lg bg-gradient-to-r from-blue-500 to-violet-500 px-3 py-2 text-sm text-white transition-colors hover:from-blue-600 hover:to-violet-600 disabled:opacity-40 shadow-sm shadow-blue-200 dark:shadow-blue-900/30"
           >
             发送
           </button>

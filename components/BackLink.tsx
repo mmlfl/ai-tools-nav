@@ -9,7 +9,7 @@ export default function BackLink({ href = "/", label = "返回首页" }: Props) 
   return (
     <Link
       href={href}
-      className="mb-8 inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100"
+      className="mb-8 inline-flex items-center gap-1 text-sm text-zinc-400 transition hover:text-blue-600 dark:hover:text-blue-400"
     >
       <svg
         suppressHydrationWarning
