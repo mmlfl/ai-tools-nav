@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Tool as ToolType } from "@/types/tool";
 import toolsData from "@/data/tools.json";
 import ToolGrid from "@/components/ToolGrid";
+import BackLink from "@/components/BackLink";
 import { BreadcrumbList } from "@/components/StructuredData";
 
 const BASE_URL = "https://lflaitool.top";
@@ -26,6 +27,7 @@ export default function ToolsPage() {
         ]}
       />
       <div className="mx-auto max-w-6xl px-4 py-12">
+        <BackLink />
         <section className="mb-10">
           <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-4xl">
             AI 工具导航

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getAllComparePages } from "@/lib/content";
 import { BreadcrumbList } from "@/components/StructuredData";
+import BackLink from "@/components/BackLink";
 import SearchableGrid from "@/components/SearchableGrid";
 
 const BASE_URL = "https://lflaitool.top";
@@ -34,6 +35,7 @@ export default function CompareListPage() {
         ]}
       />
       <div className="mx-auto max-w-6xl px-4 py-12">
+        <BackLink />
         <section className="mb-8">
           <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-4xl">
             工具对比
