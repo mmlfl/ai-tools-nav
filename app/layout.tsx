@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import { WebSite } from "@/components/StructuredData";
 import ChatProvider from "@/components/ChatProvider";
@@ -30,6 +31,11 @@ export const metadata: Metadata = {
     title: "AI Tools Nav - 发现最优秀的 AI 工具",
     description: "精选 AI 工具导航，帮你发现最新最实用的 AI 产品",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -68,7 +74,9 @@ export default function RootLayout({
             &copy; {new Date().getFullYear()} AI Tools Nav - AI 工具导航
           </div>
         </footer>
-        <ChatProvider />
+        <Suspense fallback={null}>
+          <ChatProvider />
+        </Suspense>
       </body>
     </html>
   );
