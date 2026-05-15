@@ -70,6 +70,18 @@ export default async function Home({ params }: Props) {
           </div>
         </section>
 
+        {/* Intro / Value Prop */}
+        <section className="mb-20 animate-in animate-in-2">
+          <div className="rounded-2xl border-l-4 border-blue-500 bg-white px-8 py-10 dark:bg-zinc-900 dark:border-blue-400 shadow-sm">
+            <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+              {dict.home.introTitle}
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-zinc-600 dark:text-zinc-300 max-w-3xl">
+              {dict.home.introBody}
+            </p>
+          </div>
+        </section>
+
         {/* Module cards */}
         <div className="grid gap-6 sm:grid-cols-2 mb-20">
           <Link

@@ -7,6 +7,8 @@
   "home": {
     "heroTitle": "AI 一站式速通",
     "heroSubtitle": "从选工具到用工具，一站式搞定 AI。精选 {toolCount} 优质 AI 工具，提供深度对比评测与详细使用教程。",
+    "introTitle": "AI 工具太多，到底该用哪个？",
+    "introBody": "每天都有成百上千的 AI 工具发布。想做视频？写代码？画张图？每件事都有几十个工具声称自己最好。哪个才真正适合你的工作流？怎么搭配使用才高效？别翻了——我们帮你筛选出真正好用的，直接上手干活。",
     "toolsCardTitle": "AI 工具导航",
     "toolsCardDesc": "精选 {count} 款 AI 工具，覆盖 7 大分类。按分类、价格快速筛选，找到你需要的工具。",
     "toolsCardCTA": "浏览工具",
