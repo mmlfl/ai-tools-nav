@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Tool Guide Generator.
 Reads tools.json, generates individual tool guide Markdown via LangChain + Qwen,
-writes to ../content/guide/
+writes to ../content/guide/zh/
 """
 import json
 import os
@@ -17,8 +17,10 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 TOOLS_PATH = BASE_DIR / "data" / "tools.json"
-CONTENT_DIR = BASE_DIR / "content" / "guide"
+CONTENT_DIR = BASE_DIR / "content" / "guide" / "zh"
 INDEX_PATH = BASE_DIR / "data" / "content-index.json"
+MAX_ARTICLES_PER_RUN = 5
+API_TIMEOUT = 120
 
 GUIDE_PROMPT = ChatPromptTemplate.from_messages([
     ("system", """你是一个专业的 AI 工具使用教程写手。根据提供的工具信息，写一篇详细的工具使用指南。
@@ -66,6 +68,8 @@ def generate_guide(tool):
         base_url=os.getenv("QWEN_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1"),
         api_key=os.getenv("QWEN_API_KEY"),
         temperature=0.7,
+        timeout=API_TIMEOUT,
+        max_retries=1,
     )
     messages = GUIDE_PROMPT.format_messages(
         tool=json.dumps(tool, ensure_ascii=False, indent=2),
@@ -100,10 +104,7 @@ def update_index(slug, frontmatter):
         "date": frontmatter.get("date", str(date.today())),
     }
 
-    if "guide" not in index:
-        index["guide"] = []
-
-    existing = [i for i in index["guide"] if i["slug"] != slug]
+    existing = [i for i in index.get("guide", []) if i["slug"] != slug]
     existing.append(entry)
     index["guide"] = existing
 
@@ -127,12 +128,16 @@ def parse_frontmatter(content):
 
 def main():
     if not os.getenv("QWEN_API_KEY"):
-        print("Error: QWEN_API_KEY not set. Create python-service/.env with your API key.", file=sys.stderr)
+        print("Error: QWEN_API_KEY not set.", file=sys.stderr)
         sys.exit(1)
 
     tools = load_tools()
 
+    generated = 0
     for tool in tools:
+        if generated >= MAX_ARTICLES_PER_RUN:
+            break
+
         slug = tool["slug"]
         output_filename = slug
 
@@ -140,18 +145,21 @@ def main():
             print(f"Skip existing: {output_filename}.md")
             continue
 
-        print(f"Generating guide for: {tool['name']} ({tool['category']})")
+        print(f"[{generated + 1}/{MAX_ARTICLES_PER_RUN}] Generating guide for: {tool['name']} ({tool['category']})")
         for attempt in range(2):
             try:
                 content = generate_guide(tool)
                 saved_slug = save_article(slug, content)
                 fm = parse_frontmatter(content)
                 update_index(saved_slug, fm)
+                generated += 1
                 break
             except Exception as e:
                 print(f"  Attempt {attempt + 1} failed: {e}", file=sys.stderr)
                 if attempt == 1:
                     print(f"  Giving up on {output_filename}")
+
+    print(f"Done. Generated {generated} guide articles.")
 
 
 if __name__ == "__main__":

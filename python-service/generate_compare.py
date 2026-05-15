@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """Tool Comparison Article Generator.
-Reads tools.json, generates comparison Markdown via LangChain + Qwen (阿里千问),
-writes to ../content/compare/
+Reads tools.json, generates comparison Markdown via LangChain + Qwen,
+writes to ../content/compare/zh/
 """
 import json
 import os
 import sys
 from pathlib import Path
-import itertools
 from datetime import date
 
 from dotenv import load_dotenv
@@ -18,8 +17,10 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 TOOLS_PATH = BASE_DIR / "data" / "tools.json"
-CONTENT_DIR = BASE_DIR / "content" / "compare"
+CONTENT_DIR = BASE_DIR / "content" / "compare" / "zh"
 INDEX_PATH = BASE_DIR / "data" / "content-index.json"
+MAX_ARTICLES_PER_RUN = 5
+API_TIMEOUT = 120
 
 COMPARE_PROMPT = ChatPromptTemplate.from_messages([
     ("system", """你是一个专业的 AI 工具评测写手。根据提供的工具信息，写一篇深度工具对比文章。
@@ -65,6 +66,8 @@ def generate_compare(tool1, tool2, category):
         base_url=os.getenv("QWEN_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1"),
         api_key=os.getenv("QWEN_API_KEY"),
         temperature=0.7,
+        timeout=API_TIMEOUT,
+        max_retries=1,
     )
     messages = COMPARE_PROMPT.format_messages(
         tool1=json.dumps(tool1, ensure_ascii=False, indent=2),
@@ -73,7 +76,6 @@ def generate_compare(tool1, tool2, category):
     )
     response = llm.invoke(messages)
     return response.content
-
 
 
 def save_article(slugs, content):
@@ -102,7 +104,7 @@ def update_index(slug, frontmatter):
         "date": frontmatter.get("date", str(date.today())),
     }
 
-    existing = [i for i in index["compare"] if i["slug"] != slug]
+    existing = [i for i in index.get("compare", []) if i["slug"] != slug]
     existing.append(entry)
     index["compare"] = existing
 
@@ -126,7 +128,7 @@ def parse_frontmatter(content):
 
 def main():
     if not os.getenv("QWEN_API_KEY"):
-        print("Error: QWEN_API_KEY not set. Create python-service/.env with your API key.", file=sys.stderr)
+        print("Error: QWEN_API_KEY not set.", file=sys.stderr)
         sys.exit(1)
 
     tools = load_tools()
@@ -134,30 +136,36 @@ def main():
     for t in tools:
         categories.setdefault(t["category"], []).append(t)
 
+    generated = 0
     for cat, cat_tools in categories.items():
         if len(cat_tools) < 2:
             continue
-        for t1, t2 in itertools.combinations(cat_tools, 2):
-            slugs = [t1["slug"], t2["slug"]]
-            filename_a = f"{slugs[0]}-vs-{slugs[1]}"
-            filename_b = f"{slugs[1]}-vs-{slugs[0]}"
+        if generated >= MAX_ARTICLES_PER_RUN:
+            break
 
-            if (CONTENT_DIR / f"{filename_a}.md").exists() or (CONTENT_DIR / f"{filename_b}.md").exists():
-                print(f"Skip existing: {slugs[0]} vs {slugs[1]}")
-                continue
+        t1, t2 = cat_tools[0], cat_tools[1]
+        slugs = [t1["slug"], t2["slug"]]
+        output_filename = f"{slugs[0]}-vs-{slugs[1]}"
 
-            print(f"Generating: {t1['name']} vs {t2['name']} ({cat})")
-            for attempt in range(2):
-                try:
-                    content = generate_compare(t1, t2, cat)
-                    slug = save_article(slugs, content)
-                    fm = parse_frontmatter(content)
-                    update_index(slug, fm)
-                    break
-                except Exception as e:
-                    print(f"  Attempt {attempt + 1} failed: {e}", file=sys.stderr)
-                    if attempt == 1:
-                        print(f"  Giving up on {filename_a}")
+        if (CONTENT_DIR / f"{output_filename}.md").exists():
+            print(f"Skip existing: {output_filename}.md")
+            continue
+
+        print(f"[{generated + 1}/{MAX_ARTICLES_PER_RUN}] Generating: {t1['name']} vs {t2['name']} ({cat})")
+        for attempt in range(2):
+            try:
+                content = generate_compare(t1, t2, cat)
+                slug = save_article(slugs, content)
+                fm = parse_frontmatter(content)
+                update_index(slug, fm)
+                generated += 1
+                break
+            except Exception as e:
+                print(f"  Attempt {attempt + 1} failed: {e}", file=sys.stderr)
+                if attempt == 1:
+                    print(f"  Giving up on {output_filename}")
+
+    print(f"Done. Generated {generated} comparison articles.")
 
 
 if __name__ == "__main__":

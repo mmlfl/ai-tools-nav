@@ -5,9 +5,17 @@ on:
     - cron: "37 8 * * 1"   # Every Monday ~8:37 UTC
   workflow_dispatch:         # Manual trigger from GitHub UI
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+concurrency:
+  group: content-gen
+  cancel-in-progress: false
+
 jobs:
   generate:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       contents: write
     steps:
