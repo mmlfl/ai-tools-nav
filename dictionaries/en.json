@@ -1,0 +1,110 @@
+{
+  "site": {
+    "name": "AI Tools Nav",
+    "tagline": "AI Tools Directory",
+    "description": "Discover the best AI tools to boost your productivity"
+  },
+  "home": {
+    "heroTitle": "AI One-Stop Express",
+    "heroSubtitle": "From choosing to mastering AI tools — all in one place. Handpicked {toolCount} top AI tools with in-depth comparisons and detailed tutorials.",
+    "toolsCardTitle": "AI Tools Directory",
+    "toolsCardDesc": "Browse {count} handpicked AI tools across 7 categories. Filter by category and pricing to find exactly what you need.",
+    "toolsCardCTA": "Browse Tools",
+    "compareCardTitle": "Tool Comparisons",
+    "compareCardDesc": "{count} in-depth comparison articles covering features, pricing, and use cases to help you decide.",
+    "compareCardCTA": "View Comparisons",
+    "guideCardTitle": "Usage Guides",
+    "guideCardDesc": "{count} detailed tutorials to help you master each AI tool's core features and techniques.",
+    "guideCardCTA": "Browse Guides",
+    "breadcrumbHome": "Home"
+  },
+  "tools": {
+    "title": "AI Tools Directory",
+    "description": "Discover the best AI tools to boost your productivity — {count} tools curated",
+    "breadcrumb": "Tools",
+    "searchPlaceholder": "Search AI tools...",
+    "emptyTitle": "No matching tools found",
+    "emptySubtitle": "Try changing filters or search keywords"
+  },
+  "tool": {
+    "visitWebsite": "Visit Website",
+    "similarTools": "Similar Tools",
+    "relatedCompare": "Related Comparisons",
+    "relatedGuide": "Usage Guide"
+  },
+  "compare": {
+    "listingTitle": "Tool Comparisons",
+    "listingSubtitle": "In-depth comparisons of popular AI tools to help you choose",
+    "breadcrumb": "Comparisons",
+    "relatedTools": "Related Tools",
+    "toolsInArticle": "Tools Mentioned in This Article",
+    "emptyText": "No comparison articles yet",
+    "noMatchText": "No matching comparison articles",
+    "searchPlaceholder": "Search tools, e.g. ChatGPT, Claude…"
+  },
+  "guide": {
+    "listingTitle": "Usage Guides",
+    "listingSubtitle": "Learn how to use each AI tool with detailed tutorials",
+    "breadcrumb": "Guides",
+    "relatedTools": "Related Tools",
+    "emptyText": "No usage guides yet",
+    "noMatchText": "No matching usage guides",
+    "searchPlaceholder": "Search tools, e.g. Midjourney, Sora…"
+  },
+  "category": {
+    "title": "{category} AI Tools",
+    "description": "Curated list of {category} AI tools",
+    "empty": "No tools in this category yet"
+  },
+  "common": {
+    "backHome": "Back to Home",
+    "searchAll": "All",
+    "searchResult": "{count} results found"
+  },
+  "chat": {
+    "title": "AI Tool Recommendations",
+    "intro": "Tell me what you want to do, and I'll recommend the best AI tools.\nFor example: \"I want to create a product promo video\"",
+    "placeholder": "Describe your needs...",
+    "send": "Send",
+    "error": "Sorry, the recommendation service is temporarily unavailable. Please try again later.",
+    "closeLabel": "Close",
+    "openLabel": "Open AI Recommendations",
+    "closeChatLabel": "Close AI Recommendations"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "The page you're looking for doesn't exist or has been removed",
+    "backHome": "Back to Home"
+  },
+  "categories": {
+    "chat": "Chat",
+    "image": "Image",
+    "video": "Video",
+    "code": "Code",
+    "audio": "Audio",
+    "office": "Office",
+    "search": "Search"
+  },
+  "pricing": {
+    "free": "Free",
+    "freemium": "Freemium",
+    "paid": "Paid",
+    "waitlist": "Waitlist"
+  },
+  "metadata": {
+    "homeTitle": "AI One-Stop Express — Find & Master AI Tools",
+    "homeDescription": "AI tools directory, in-depth comparisons, and detailed guides — everything you need to find and master the best AI tools. Covering chat, image, video, code, and more.",
+    "homeOGDescription": "AI tools directory, comparisons, and guides — all in one place.",
+    "toolsTitle": "AI Tools Directory — Discover the Best AI Tools",
+    "toolsOGDescription": "Curated AI tools across 7 categories. Find the right AI tool fast.",
+    "compareTitle": "AI Tool Comparisons — In-Depth Reviews to Help You Choose",
+    "compareDescription": "Comprehensive comparisons of mainstream AI tools covering features, pricing, and use cases across chat, image generation, coding assistants, and more.",
+    "compareOGDescription": "Comprehensive comparisons of mainstream AI tools covering features, pricing, and use cases.",
+    "guideTitle": "AI Tool Guides — From Beginner to Expert",
+    "guideDescription": "Detailed tutorials for 20+ AI tools covering core features, step-by-step instructions, pricing, and use cases to help you unlock each tool's full potential.",
+    "guideOGDescription": "Detailed tutorials for 20+ AI tools to help you unlock their full potential.",
+    "notFoundTitle": "404 - Page Not Found",
+    "siteKeywords": ["AI tools", "artificial intelligence", "AI directory", "ChatGPT", "AI coding", "AI image", "AI video", "AI recommendations"]
+  },
+  "footer": "© {year} AI Tools Nav - AI Tools Directory"
+}

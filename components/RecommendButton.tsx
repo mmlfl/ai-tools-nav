@@ -3,14 +3,21 @@
 interface Props {
   onClick: () => void;
   isOpen: boolean;
+  openLabel?: string;
+  closeLabel?: string;
 }
 
-export default function RecommendButton({ onClick, isOpen }: Props) {
+export default function RecommendButton({
+  onClick,
+  isOpen,
+  openLabel = "打开 AI 推荐",
+  closeLabel = "关闭 AI 推荐",
+}: Props) {
   return (
     <button
       onClick={onClick}
       className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-zinc-900 text-white shadow-lg transition-all hover:scale-105 hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
-      aria-label={isOpen ? "关闭 AI 推荐" : "打开 AI 推荐"}
+      aria-label={isOpen ? closeLabel : openLabel}
     >
       {isOpen ? (
         <svg suppressHydrationWarning width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

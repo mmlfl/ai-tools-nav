@@ -2,7 +2,9 @@
   {
     "slug": "chatgpt",
     "name": "ChatGPT",
+    "name_en": "ChatGPT",
     "description": "OpenAI 推出的对话式 AI 助手，支持文本生成、代码编写、创意写作等多种场景。",
+    "description_en": "OpenAI's conversational AI assistant supporting text generation, coding, creative writing, and more.",
     "url": "https://chat.openai.com",
     "category": "chat",
     "tags": ["对话", "写作", "编程"],
@@ -12,7 +14,9 @@
   {
     "slug": "claude",
     "name": "Claude",
+    "name_en": "Claude",
     "description": "Anthropic 开发的 AI 助手，擅长长文本分析、代码审查和复杂推理任务。",
+    "description_en": "Anthropic's AI assistant, excels at long-text analysis, code review, and complex reasoning.",
     "url": "https://claude.ai",
     "category": "chat",
     "tags": ["对话", "编程", "分析"],
@@ -22,7 +26,9 @@
   {
     "slug": "gemini",
     "name": "Gemini",
+    "name_en": "Gemini",
     "description": "Google 的多模态 AI 模型，深度集成 Google 生态，支持文本、图像、代码理解。",
+    "description_en": "Google's multimodal AI model, deeply integrated with Google ecosystem, supporting text, image, and code understanding.",
     "url": "https://gemini.google.com",
     "category": "chat",
     "tags": ["对话", "多模态", "搜索"],
@@ -32,7 +38,9 @@
   {
     "slug": "midjourney",
     "name": "Midjourney",
+    "name_en": "Midjourney",
     "description": "顶级的 AI 图像生成工具，以艺术风格和高质量输出闻名。",
+    "description_en": "Top-tier AI image generation tool, renowned for artistic style and high-quality output.",
     "url": "https://www.midjourney.com",
     "category": "image",
     "tags": ["图像生成", "艺术", "设计"],
@@ -42,7 +50,9 @@
   {
     "slug": "dall-e",
     "name": "DALL·E 3",
+    "name_en": "DALL·E 3",
     "description": "OpenAI 的图像生成模型，擅长理解复杂提示词，生成准确且创意的图片。",
+    "description_en": "OpenAI's image generation model, excels at understanding complex prompts and creating accurate, creative images.",
     "url": "https://openai.com/dall-e-3",
     "category": "image",
     "tags": ["图像生成", "创意"],
@@ -52,7 +62,9 @@
   {
     "slug": "stable-diffusion",
     "name": "Stable Diffusion",
+    "name_en": "Stable Diffusion",
     "description": "开源的图像生成模型，可在本地运行，社区生态丰富。",
+    "description_en": "Open-source image generation model that runs locally with a rich community ecosystem.",
     "url": "https://stability.ai",
     "category": "image",
     "tags": ["图像生成", "开源", "本地运行"],
@@ -62,7 +74,9 @@
   {
     "slug": "sora",
     "name": "Sora",
+    "name_en": "Sora",
     "description": "OpenAI 的文字转视频模型，可生成长达一分钟的高质量视频。",
+    "description_en": "OpenAI's text-to-video model, capable of generating high-quality videos up to one minute long.",
     "url": "https://openai.com/sora",
     "category": "video",
     "tags": ["视频生成", "文字转视频"],
@@ -72,7 +86,9 @@
   {
     "slug": "runway",
     "name": "Runway",
+    "name_en": "Runway",
     "description": "专业的 AI 视频编辑和生成平台，提供丰富的视频创作工具。",
+    "description_en": "Professional AI video editing and generation platform with a comprehensive suite of creative tools.",
     "url": "https://runwayml.com",
     "category": "video",
     "tags": ["视频生成", "视频编辑"],
@@ -82,7 +98,9 @@
   {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
+    "name_en": "GitHub Copilot",
     "description": "GitHub 出品的 AI 编程助手，深度集成主流 IDE，根据上下文生成代码。",
+    "description_en": "GitHub's AI coding assistant, deeply integrated with popular IDEs, generating code from context.",
     "url": "https://github.com/features/copilot",
     "category": "code",
     "tags": ["代码补全", "IDE 集成"],
@@ -92,7 +110,9 @@
   {
     "slug": "cursor",
     "name": "Cursor",
+    "name_en": "Cursor",
     "description": "AI 优先的代码编辑器，基于 VS Code，内建对话式编程体验。",
+    "description_en": "AI-first code editor based on VS Code with built-in conversational programming experience.",
     "url": "https://cursor.sh",
     "category": "code",
     "tags": ["编辑器", "对话编程"],
@@ -102,7 +122,9 @@
   {
     "slug": "vercel-v0",
     "name": "v0 by Vercel",
+    "name_en": "v0 by Vercel",
     "description": "Vercel 推出的 AI 前端开发工具，通过自然语言描述生成 UI 代码。",
+    "description_en": "Vercel's AI frontend development tool that generates UI code from natural language descriptions.",
     "url": "https://v0.dev",
     "category": "code",
     "tags": ["前端", "UI 生成"],
@@ -112,7 +134,9 @@
   {
     "slug": "elevenlabs",
     "name": "ElevenLabs",
+    "name_en": "ElevenLabs",
     "description": "领先的 AI 语音合成平台，支持多种语言的文本转语音和声音克隆。",
+    "description_en": "Leading AI voice synthesis platform supporting multilingual text-to-speech and voice cloning.",
     "url": "https://elevenlabs.io",
     "category": "audio",
     "tags": ["语音合成", "声音克隆", "多语言"],
@@ -122,7 +146,9 @@
   {
     "slug": "suno",
     "name": "Suno",
+    "name_en": "Suno",
     "description": "AI 音乐生成工具，通过文字描述即可创作完整的歌曲。",
+    "description_en": "AI music generation tool that creates complete songs from text descriptions.",
     "url": "https://suno.com",
     "category": "audio",
     "tags": ["音乐生成", "歌曲创作"],
@@ -132,7 +158,9 @@
   {
     "slug": "notion-ai",
     "name": "Notion AI",
+    "name_en": "Notion AI",
     "description": "Notion 内置的 AI 功能，辅助写作、总结、翻译和头脑风暴。",
+    "description_en": "Notion's built-in AI features for writing assistance, summarization, translation, and brainstorming.",
     "url": "https://www.notion.so/product/ai",
     "category": "office",
     "tags": ["写作", "总结", "协作"],
@@ -142,7 +170,9 @@
   {
     "slug": "gamma",
     "name": "Gamma",
+    "name_en": "Gamma",
     "description": "AI 驱动的演示文稿和文档创建工具，快速生成精美的 PPT 和网页文档。",
+    "description_en": "AI-powered presentation and document creation tool for quickly generating polished slides and web docs.",
     "url": "https://gamma.app",
     "category": "office",
     "tags": ["演示文稿", "文档", "PPT"],
@@ -152,7 +182,9 @@
   {
     "slug": "perplexity",
     "name": "Perplexity",
+    "name_en": "Perplexity",
     "description": "AI 搜索引擎，提供带来源引用的准确答案，适合研究和事实查询。",
+    "description_en": "AI-powered search engine providing accurate answers with source citations, ideal for research and fact-checking.",
     "url": "https://www.perplexity.ai",
     "category": "search",
     "tags": ["搜索", "研究", "引用"],
@@ -162,7 +194,9 @@
   {
     "slug": "consensus",
     "name": "Consensus",
+    "name_en": "Consensus",
     "description": "AI 学术搜索引擎，直接从科研论文中提取和总结研究发现。",
+    "description_en": "AI academic search engine that extracts and summarizes findings directly from research papers.",
     "url": "https://consensus.app",
     "category": "search",
     "tags": ["学术搜索", "论文", "研究"],
@@ -172,7 +206,9 @@
   {
     "slug": "jasper",
     "name": "Jasper",
+    "name_en": "Jasper",
     "description": "面向营销团队的 AI 内容创作平台，擅长博客、广告文案和社交媒体。",
+    "description_en": "AI content creation platform for marketing teams, specializing in blogs, ad copy, and social media content.",
     "url": "https://www.jasper.ai",
     "category": "office",
     "tags": ["营销", "文案", "内容创作"],
@@ -182,7 +218,9 @@
   {
     "slug": "windsurf",
     "name": "Windsurf",
+    "name_en": "Windsurf",
     "description": "Codeium 推出的 AI IDE，支持多文件编辑和上下文感知的代码生成。",
+    "description_en": "Codeium's AI IDE with multi-file editing and context-aware code generation.",
     "url": "https://codeium.com/windsurf",
     "category": "code",
     "tags": ["编辑器", "代码生成"],
@@ -192,7 +230,9 @@
   {
     "slug": "leonardo",
     "name": "Leonardo.ai",
+    "name_en": "Leonardo.ai",
     "description": "面向游戏和设计领域的 AI 图像生成平台，擅长游戏资产和概念艺术。",
+    "description_en": "AI image generation platform for gaming and design, specializing in game assets and concept art.",
     "url": "https://leonardo.ai",
     "category": "image",
     "tags": ["图像生成", "游戏", "概念艺术"],

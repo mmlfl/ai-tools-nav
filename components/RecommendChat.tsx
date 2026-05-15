@@ -9,12 +9,22 @@ interface Message {
   content: string;
 }
 
+interface ChatLabels {
+  title?: string;
+  intro?: string;
+  placeholder?: string;
+  send?: string;
+  error?: string;
+  closeLabel?: string;
+}
+
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  labels?: ChatLabels;
 }
 
-export default function RecommendChat({ isOpen, onClose }: Props) {
+export default function RecommendChat({ isOpen, onClose, labels }: Props) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
@@ -86,7 +96,7 @@ export default function RecommendChat({ isOpen, onClose }: Props) {
         const copy = [...prev];
         copy[copy.length - 1] = {
           ...copy[copy.length - 1],
-          content: "抱歉，推荐服务暂时不可用，请稍后再试。",
+          content: labels?.error ?? "抱歉，推荐服务暂时不可用，请稍后再试。",
         };
         return copy;
       });
@@ -108,12 +118,12 @@ export default function RecommendChat({ isOpen, onClose }: Props) {
     <div className="fixed bottom-24 right-6 z-50 flex w-96 flex-col rounded-2xl border border-zinc-200 bg-white shadow-2xl dark:border-zinc-700 dark:bg-zinc-900">
       <div className="flex items-center justify-between border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
         <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-          AI 工具推荐
+          {labels?.title ?? "AI 工具推荐"}
         </h3>
         <button
           onClick={onClose}
           className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
-          aria-label="关闭"
+          aria-label={labels?.closeLabel ?? "关闭"}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
@@ -124,9 +134,8 @@ export default function RecommendChat({ isOpen, onClose }: Props) {
       <div className="h-80 overflow-y-auto px-4 py-3 space-y-3">
         {messages.length === 0 && (
           <p className="text-sm text-zinc-400 dark:text-zinc-500">
-            告诉我你想做什么，我帮你推荐最适合的 AI 工具。
-            <br />
-            比如：「我想做一个产品宣传视频」
+            {labels?.intro ??
+              "告诉我你想做什么，我帮你推荐最适合的 AI 工具。\n比如：「我想做一个产品宣传视频」"}
           </p>
         )}
         {messages.map((msg, i) => (
@@ -159,7 +168,7 @@ export default function RecommendChat({ isOpen, onClose }: Props) {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="描述你的需求..."
+            placeholder={labels?.placeholder ?? "描述你的需求..."}
             disabled={streaming}
             className="flex-1 rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-zinc-400 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:border-zinc-500"
           />
@@ -168,7 +177,7 @@ export default function RecommendChat({ isOpen, onClose }: Props) {
             disabled={streaming || !input.trim()}
             className="rounded-lg bg-gradient-to-r from-blue-500 to-violet-500 px-3 py-2 text-sm text-white transition-colors hover:from-blue-600 hover:to-violet-600 disabled:opacity-40 shadow-sm shadow-blue-200 dark:shadow-blue-900/30"
           >
-            发送
+            {labels?.send ?? "发送"}
           </button>
         </div>
       </div>

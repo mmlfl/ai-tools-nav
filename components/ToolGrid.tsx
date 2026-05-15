@@ -9,9 +9,14 @@ import EmptyState from "@/components/EmptyState";
 
 interface ToolGridProps {
   tools: ToolType[];
+  locale?: string;
+  searchPlaceholder?: string;
+  emptyTitle?: string;
+  emptySubtitle?: string;
 }
 
-export default function ToolGrid({ tools }: ToolGridProps) {
+export default function ToolGrid({ tools, locale, searchPlaceholder, emptyTitle, emptySubtitle }: ToolGridProps) {
+  const isEn = locale === "en";
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<Category | null>(null);
   const [pricing, setPricing] = useState<Pricing | null>(null);
@@ -28,9 +33,9 @@ export default function ToolGrid({ tools }: ToolGridProps) {
   return (
     <>
       <section className="space-y-4 mb-8">
-        <SearchBar value={search} onChange={setSearch} />
+        <SearchBar value={search} onChange={setSearch} placeholder={searchPlaceholder} />
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <CategoryFilter selected={category} onChange={setCategory} />
+          <CategoryFilter selected={category} onChange={setCategory} locale={locale} />
           <div className="flex gap-2">
             {([null, "free", "freemium", "paid"] as (Pricing | null)[]).map((p) => (
               <button
@@ -42,7 +47,13 @@ export default function ToolGrid({ tools }: ToolGridProps) {
                     : "bg-zinc-100 text-zinc-500 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700"
                 }`}
               >
-                {p === null ? "全部价格" : p === "free" ? "免费" : p === "freemium" ? "Freemium" : "付费"}
+                {p === null
+                    ? (isEn ? "All Pricing" : "全部价格")
+                    : p === "free"
+                      ? (isEn ? "Free" : "免费")
+                      : p === "freemium"
+                        ? "Freemium"
+                        : (isEn ? "Paid" : "付费")}
               </button>
             ))}
           </div>
@@ -51,11 +62,11 @@ export default function ToolGrid({ tools }: ToolGridProps) {
 
       <section>
         {filtered.length === 0 ? (
-          <EmptyState />
+          <EmptyState title={emptyTitle} subtitle={emptySubtitle} />
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((tool) => (
-              <ToolCard key={tool.slug} tool={tool} />
+              <ToolCard key={tool.slug} tool={tool} locale={locale} />
             ))}
           </div>
         )}

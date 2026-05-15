@@ -1,4 +1,9 @@
-export default function EmptyState() {
+interface EmptyStateProps {
+  title?: string;
+  subtitle?: string;
+}
+
+export default function EmptyState({ title = "没有找到匹配的工具", subtitle = "试试更换筛选条件或搜索关键词" }: EmptyStateProps) {
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center">
       <svg
@@ -12,10 +17,10 @@ export default function EmptyState() {
         <path d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
       </svg>
       <h3 className="mt-4 text-lg font-medium text-zinc-500 dark:text-zinc-400">
-        没有找到匹配的工具
+        {title}
       </h3>
       <p className="mt-1 text-sm text-zinc-400 dark:text-zinc-500">
-        试试更换筛选条件或搜索关键词
+        {subtitle}
       </p>
     </div>
   );

@@ -5,18 +5,31 @@ import { marked } from "marked";
 import { CompareFrontmatter, ComparePage, GuideFrontmatter, GuidePage, Tool } from "@/types/tool";
 import toolsData from "@/data/tools.json";
 
-const CONTENT_DIR = path.join(process.cwd(), "content/compare");
 const tools = toolsData as Tool[];
 
-export function getCompareSlugs(): string[] {
-  if (!fs.existsSync(CONTENT_DIR)) return [];
-  return fs.readdirSync(CONTENT_DIR)
+function getCompareDir(locale: string): string {
+  const dir = path.join(process.cwd(), "content/compare", locale);
+  if (fs.existsSync(dir)) return dir;
+  return path.join(process.cwd(), "content/compare", "zh");
+}
+
+function getGuideDir(locale: string): string {
+  const dir = path.join(process.cwd(), "content/guide", locale);
+  if (fs.existsSync(dir)) return dir;
+  return path.join(process.cwd(), "content/guide", "zh");
+}
+
+export function getCompareSlugs(locale: string = "zh"): string[] {
+  const dir = getCompareDir(locale);
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir)
     .filter((f) => f.endsWith(".md"))
     .map((f) => f.replace(/\.md$/, ""));
 }
 
-export function getCompareContent(slug: string): ComparePage | null {
-  const filePath = path.join(CONTENT_DIR, `${slug}.md`);
+export function getCompareContent(slug: string, locale: string = "zh"): ComparePage | null {
+  const dir = getCompareDir(locale);
+  const filePath = path.join(dir, `${slug}.md`);
   if (!fs.existsSync(filePath)) return null;
 
   const raw = fs.readFileSync(filePath, "utf-8");
@@ -31,23 +44,23 @@ export function getCompareContent(slug: string): ComparePage | null {
   return { slug, frontmatter, content, html, relatedTools };
 }
 
-export function getAllComparePages(): ComparePage[] {
-  return getCompareSlugs()
-    .map(getCompareContent)
+export function getAllComparePages(locale: string = "zh"): ComparePage[] {
+  return getCompareSlugs(locale)
+    .map((slug) => getCompareContent(slug, locale))
     .filter((p): p is ComparePage => p !== null);
 }
 
-const GUIDE_CONTENT_DIR = path.join(process.cwd(), "content/guide");
-
-export function getGuideSlugs(): string[] {
-  if (!fs.existsSync(GUIDE_CONTENT_DIR)) return [];
-  return fs.readdirSync(GUIDE_CONTENT_DIR)
+export function getGuideSlugs(locale: string = "zh"): string[] {
+  const dir = getGuideDir(locale);
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir)
     .filter((f) => f.endsWith(".md"))
     .map((f) => f.replace(/\.md$/, ""));
 }
 
-export function getGuideContent(slug: string): GuidePage | null {
-  const filePath = path.join(GUIDE_CONTENT_DIR, `${slug}.md`);
+export function getGuideContent(slug: string, locale: string = "zh"): GuidePage | null {
+  const dir = getGuideDir(locale);
+  const filePath = path.join(dir, `${slug}.md`);
   if (!fs.existsSync(filePath)) return null;
 
   const raw = fs.readFileSync(filePath, "utf-8");
@@ -60,20 +73,20 @@ export function getGuideContent(slug: string): GuidePage | null {
   return { slug, frontmatter, content, html, tool };
 }
 
-export function getAllGuidePages(): GuidePage[] {
-  return getGuideSlugs()
-    .map(getGuideContent)
+export function getAllGuidePages(locale: string = "zh"): GuidePage[] {
+  return getGuideSlugs(locale)
+    .map((slug) => getGuideContent(slug, locale))
     .filter((p): p is GuidePage => p !== null);
 }
 
-// Cross-reference helpers
+// Cross-reference helpers — always use zh for slug-based lookups since slugs are locale-independent
 
 export function getComparePagesForTool(slug: string): ComparePage[] {
-  return getAllComparePages().filter((p) =>
+  return getAllComparePages("zh").filter((p) =>
     p.frontmatter.tools.includes(slug)
   );
 }
 
 export function getGuidePageForTool(slug: string): GuidePage | null {
-  return getAllGuidePages().find((p) => p.frontmatter.tool === slug) ?? null;
+  return getAllGuidePages("zh").find((p) => p.frontmatter.tool === slug) ?? null;
 }

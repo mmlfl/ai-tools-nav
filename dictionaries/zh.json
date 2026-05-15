@@ -1,0 +1,110 @@
+{
+  "site": {
+    "name": "AI Tools Nav",
+    "tagline": "AI 工具导航",
+    "description": "发现最优秀的 AI 工具，提升工作效率"
+  },
+  "home": {
+    "heroTitle": "AI 一站式速通",
+    "heroSubtitle": "从选工具到用工具，一站式搞定 AI。精选 {toolCount} 优质 AI 工具，提供深度对比评测与详细使用教程。",
+    "toolsCardTitle": "AI 工具导航",
+    "toolsCardDesc": "精选 {count} 款 AI 工具，覆盖 7 大分类。按分类、价格快速筛选，找到你需要的工具。",
+    "toolsCardCTA": "浏览工具",
+    "compareCardTitle": "工具对比",
+    "compareCardDesc": "已收录 {count} 篇深度对比评测，从功能、价格、场景帮你做出最佳选择。",
+    "compareCardCTA": "查看对比",
+    "guideCardTitle": "使用指南",
+    "guideCardDesc": "已收录 {count} 篇详细教程，从入门到精通掌握每个 AI 工具的核心功能与使用技巧。",
+    "guideCardCTA": "浏览指南",
+    "breadcrumbHome": "首页"
+  },
+  "tools": {
+    "title": "AI 工具导航",
+    "description": "发现最优秀的 AI 工具，提升工作效率 — 收录 {count} 款 AI 工具",
+    "breadcrumb": "工具导航",
+    "searchPlaceholder": "搜索 AI 工具...",
+    "emptyTitle": "没有找到匹配的工具",
+    "emptySubtitle": "试试更换筛选条件或搜索关键词"
+  },
+  "tool": {
+    "visitWebsite": "访问官网",
+    "similarTools": "同类工具",
+    "relatedCompare": "相关对比",
+    "relatedGuide": "使用指南"
+  },
+  "compare": {
+    "listingTitle": "工具对比",
+    "listingSubtitle": "深度对比热门 AI 工具，帮你做出最佳选择",
+    "breadcrumb": "工具对比",
+    "relatedTools": "相关工具",
+    "toolsInArticle": "文章中提到的工具",
+    "emptyText": "暂无对比文章",
+    "noMatchText": "没有匹配的对比文章",
+    "searchPlaceholder": "搜索工具名，例如 ChatGPT、Claude…"
+  },
+  "guide": {
+    "listingTitle": "使用指南",
+    "listingSubtitle": "深入了解每个 AI 工具的使用方法和技巧",
+    "breadcrumb": "工具指南",
+    "relatedTools": "相关工具",
+    "emptyText": "暂无使用指南",
+    "noMatchText": "没有匹配的使用指南",
+    "searchPlaceholder": "搜索工具名，例如 Midjourney、Sora…"
+  },
+  "category": {
+    "title": "{category} AI 工具",
+    "description": "{category} 相关 AI 工具精选列表",
+    "empty": "该分类暂无工具"
+  },
+  "common": {
+    "backHome": "返回首页",
+    "searchAll": "全部",
+    "searchResult": "找到 {count} 条匹配结果"
+  },
+  "chat": {
+    "title": "AI 工具推荐",
+    "intro": "告诉我你想做什么，我帮你推荐最适合的 AI 工具。\n比如：「我想做一个产品宣传视频」",
+    "placeholder": "描述你的需求...",
+    "send": "发送",
+    "error": "抱歉，推荐服务暂时不可用，请稍后再试。",
+    "closeLabel": "关闭",
+    "openLabel": "打开 AI 推荐",
+    "closeChatLabel": "关闭 AI 推荐"
+  },
+  "notFound": {
+    "title": "页面未找到",
+    "description": "你访问的页面不存在或已被移除",
+    "backHome": "返回首页"
+  },
+  "categories": {
+    "chat": "对话",
+    "image": "图像",
+    "video": "视频",
+    "code": "编程",
+    "audio": "音频",
+    "office": "办公",
+    "search": "搜索"
+  },
+  "pricing": {
+    "free": "免费",
+    "freemium": "Freemium",
+    "paid": "付费",
+    "waitlist": "内测中"
+  },
+  "metadata": {
+    "homeTitle": "AI 一站式速通 — 从选工具到用工具",
+    "homeDescription": "AI 工具导航、深度对比评测、详细使用指南，一站式帮你找到并掌握最适合的 AI 工具。覆盖对话、图像、视频、编程等 7 大分类。",
+    "homeOGDescription": "AI 工具导航、深度对比、使用指南，一站式搞定 AI 工具。",
+    "toolsTitle": "AI 工具导航 — 发现最优秀的 AI 工具",
+    "toolsOGDescription": "精选 AI 工具，涵盖 7 大分类。帮你快速找到最适合的 AI 工具。",
+    "compareTitle": "AI 工具对比 — 深度评测帮你选择最佳 AI 工具",
+    "compareDescription": "全面对比主流 AI 工具的功能、价格、适用场景，涵盖 AI 对话、图像生成、编程辅助等多个分类，助你做出明智选择。",
+    "compareOGDescription": "全面对比主流 AI 工具的功能、价格、适用场景，助你做出明智选择。",
+    "guideTitle": "AI 工具使用指南 — 从入门到精通",
+    "guideDescription": "为 20+ AI 工具提供详细的使用教程，涵盖核心功能、操作步骤、价格说明和适用场景，助你充分发挥每款工具的潜力。",
+    "guideOGDescription": "为 20+ AI 工具提供详细的使用教程，助你充分发挥每款工具的潜力。",
+    "notFoundTitle": "404 - 页面未找到",
+    "siteKeywords": ["AI工具", "人工智能", "AI导航", "ChatGPT", "AI编程", "AI绘图", "AI视频", "AI工具推荐"]
+  },
+  "footer": "© {year} AI Tools Nav - AI 工具导航"
+}

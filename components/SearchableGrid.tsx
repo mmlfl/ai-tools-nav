@@ -19,6 +19,8 @@ interface Props {
   emptyText?: string;
   noMatchText?: string;
   categoryLabels?: Record<string, string>;
+  allLabel?: string;
+  resultLabel?: string;
 }
 
 export default function SearchableGrid({
@@ -28,6 +30,8 @@ export default function SearchableGrid({
   emptyText = "暂无内容",
   noMatchText = "没有匹配的结果",
   categoryLabels,
+  allLabel = "全部",
+  resultLabel,
 }: Props) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<string | null>(null);
@@ -67,7 +71,7 @@ export default function SearchableGrid({
                 : "bg-zinc-100 text-zinc-600 hover:bg-blue-50 hover:text-blue-600 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-blue-950 dark:hover:text-blue-400"
             }`}
           >
-            全部
+            {allLabel}
           </button>
           {availableCategories.map((cat) => (
             <button
@@ -125,7 +129,9 @@ export default function SearchableGrid({
 
       {(search.trim() || category) && filtered.length > 0 && (
         <p className="mt-4 text-xs text-zinc-400 dark:text-zinc-500">
-          找到 {filtered.length} 条匹配结果
+          {resultLabel
+            ? resultLabel.replace("{count}", String(filtered.length))
+            : `找到 ${filtered.length} 条匹配结果`}
         </p>
       )}
     </>

@@ -5,12 +5,24 @@ export type Pricing = "free" | "freemium" | "paid" | "waitlist";
 export interface Tool {
   slug: string;
   name: string;
+  name_en?: string;
   description: string;
+  description_en?: string;
   url: string;
   category: Category;
   tags: string[];
   pricing: Pricing;
   featured: boolean;
+}
+
+export function tName(tool: Tool, locale: string): string {
+  return locale === "en" && tool.name_en ? tool.name_en : tool.name;
+}
+
+export function tDesc(tool: Tool, locale: string): string {
+  return locale === "en" && tool.description_en
+    ? tool.description_en
+    : tool.description;
 }
 
 export const CATEGORY_LABELS: Record<Category, string> = {
@@ -23,12 +35,37 @@ export const CATEGORY_LABELS: Record<Category, string> = {
   search: "搜索",
 };
 
+export const CATEGORY_LABELS_EN: Record<Category, string> = {
+  chat: "Chat",
+  image: "Image",
+  video: "Video",
+  code: "Code",
+  audio: "Audio",
+  office: "Office",
+  search: "Search",
+};
+
+export function getCategoryLabel(cat: Category, locale: string): string {
+  return locale === "en" ? CATEGORY_LABELS_EN[cat] : CATEGORY_LABELS[cat];
+}
+
 export const PRICING_LABELS: Record<Pricing, string> = {
   free: "免费",
   freemium: "Freemium",
   paid: "付费",
   waitlist: "内测中",
 };
+
+export const PRICING_LABELS_EN: Record<Pricing, string> = {
+  free: "Free",
+  freemium: "Freemium",
+  paid: "Paid",
+  waitlist: "Waitlist",
+};
+
+export function getPricingLabel(p: Pricing, locale: string): string {
+  return locale === "en" ? PRICING_LABELS_EN[p] : PRICING_LABELS[p];
+}
 
 // Content types (Phase 2)
 
