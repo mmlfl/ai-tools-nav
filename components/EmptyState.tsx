@@ -8,13 +8,14 @@ export default function EmptyState({ title = "没有找到匹配的工具", subt
     <div className="flex flex-col items-center justify-center py-20 text-center">
       <svg
         suppressHydrationWarning
-        className="h-16 w-16 text-blue-200 dark:text-blue-900/50"
+        className="h-20 w-20 text-zinc-200 dark:text-zinc-800"
         fill="none"
         stroke="currentColor"
-        strokeWidth="1"
+        strokeWidth="1.5"
         viewBox="0 0 24 24"
       >
-        <path d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
+        <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+        <path d="M22 4L12 14.01l-3-3" />
       </svg>
       <h3 className="mt-4 text-lg font-medium text-zinc-500 dark:text-zinc-400">
         {title}

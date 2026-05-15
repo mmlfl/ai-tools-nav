@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import PillButton from "./PillButton";
 
 export interface SearchableItem {
   slug: string;
@@ -63,28 +64,20 @@ export default function SearchableGrid({
     <>
       {availableCategories.length > 1 && (
         <div className="mb-4 flex flex-wrap gap-2">
-          <button
+          <PillButton
+            active={category === null}
             onClick={() => setCategory(null)}
-            className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
-              category === null
-                ? "bg-gradient-to-r from-blue-500 to-violet-500 text-white shadow-sm shadow-blue-200 dark:shadow-blue-900/30"
-                : "bg-zinc-100 text-zinc-600 hover:bg-blue-50 hover:text-blue-600 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-blue-950 dark:hover:text-blue-400"
-            }`}
           >
             {allLabel}
-          </button>
+          </PillButton>
           {availableCategories.map((cat) => (
-            <button
+            <PillButton
               key={cat}
+              active={category === cat}
               onClick={() => setCategory(cat === category ? null : cat)}
-              className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
-                category === cat
-                  ? "bg-gradient-to-r from-blue-500 to-violet-500 text-white shadow-sm shadow-blue-200 dark:shadow-blue-900/30"
-                  : "bg-zinc-100 text-zinc-600 hover:bg-blue-50 hover:text-blue-600 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-blue-950 dark:hover:text-blue-400"
-              }`}
             >
               {categoryLabels?.[cat] ?? cat}
-            </button>
+            </PillButton>
           ))}
         </div>
       )}
@@ -96,6 +89,7 @@ export default function SearchableGrid({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={placeholder}
+            aria-label={placeholder}
             className="w-full rounded-xl border border-zinc-200/80 bg-white px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 transition focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100 dark:border-zinc-800/80 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-blue-500 dark:focus:ring-blue-900/30"
           />
         </div>

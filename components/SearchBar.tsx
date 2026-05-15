@@ -24,6 +24,7 @@ export default function SearchBar({ value, onChange, placeholder = "搜索 AI �
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        aria-label={placeholder}
         className="w-full rounded-lg border border-zinc-200 bg-white py-2.5 pl-10 pr-4 text-sm outline-none transition placeholder:text-zinc-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 dark:border-zinc-800 dark:bg-zinc-900 dark:focus:border-blue-500 dark:focus:ring-blue-900/30"
       />
     </div>

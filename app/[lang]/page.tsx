@@ -6,6 +6,7 @@ import toolsData from "@/data/tools.json";
 import { getAllComparePages, getAllGuidePages } from "@/lib/content";
 import { getDictionary, hasLocale, type Locale } from "@/lib/dictionary";
 import { BreadcrumbList, WebSite } from "@/components/StructuredData";
+import ToolCard from "@/components/ToolCard";
 
 const BASE_URL = "https://lflaitool.top";
 const tools = toolsData as ToolType[];
@@ -36,6 +37,7 @@ export default async function Home({ params }: Props) {
 
   const compareCount = getAllComparePages().length;
   const guideCount = getAllGuidePages().length;
+  const featuredTools = tools.slice(0, 6);
 
   return (
     <>
@@ -44,24 +46,35 @@ export default async function Home({ params }: Props) {
         items={[{ name: dict.home.breadcrumbHome, url: `${BASE_URL}/${lang}` }]}
       />
       <div className="mx-auto max-w-5xl px-4 py-16 sm:py-24">
-        <section className="relative mb-16 overflow-hidden rounded-3xl bg-gradient-to-br from-blue-50 via-white to-violet-50 px-8 py-16 text-center dark:from-blue-950/30 dark:via-zinc-900 dark:to-violet-950/30">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(37,99,235,0.08),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(124,58,237,0.06),transparent_50%)]" />
+        {/* Hero */}
+        <section className="relative mb-20 overflow-hidden rounded-3xl bg-gradient-to-br from-blue-50 via-white to-violet-50 px-8 py-20 text-center dark:from-blue-950/30 dark:via-zinc-900 dark:to-violet-950/30">
+          {/* Geometric decoration */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute -top-20 -right-20 h-72 w-72 rounded-full border border-blue-200/40 dark:border-blue-700/20" />
+            <div className="absolute -top-16 -right-16 h-64 w-64 rounded-full border border-violet-200/30 dark:border-violet-700/15 animate-spin" style={{ animationDuration: "25s" }} />
+            <div className="absolute -bottom-24 -left-24 h-80 w-80 rounded-full border border-blue-200/30 dark:border-blue-700/15" />
+            <div className="absolute top-1/4 left-10 h-2 w-2 rounded-full bg-blue-400/40 dark:bg-blue-400/30" />
+            <div className="absolute bottom-1/3 right-12 h-3 w-3 rounded-full bg-violet-400/30 dark:bg-violet-400/20" />
+            <div className="absolute top-1/2 left-1/4 h-1.5 w-1.5 rounded-full bg-blue-400/30 dark:bg-blue-400/20" />
+          </div>
+
           <div className="relative">
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl animate-in animate-in-1">
               <span className="bg-gradient-to-r from-blue-600 via-violet-500 to-blue-600 bg-clip-text text-transparent">
                 {dict.home.heroTitle}
               </span>
             </h1>
-            <p className="mt-4 text-lg text-zinc-600 dark:text-zinc-300 max-w-2xl mx-auto">
+            <p className="mt-4 text-lg text-zinc-600 dark:text-zinc-300 max-w-2xl mx-auto animate-in animate-in-2">
               {dict.home.heroSubtitle.replace("{toolCount}", String(tools.length))}
             </p>
           </div>
         </section>
 
-        <div className="grid gap-6 sm:grid-cols-2">
+        {/* Module cards */}
+        <div className="grid gap-6 sm:grid-cols-2 mb-20">
           <Link
             href={`/${lang}/tools`}
-            className="group rounded-2xl border border-zinc-200/80 bg-white p-8 transition hover:border-blue-300 hover:shadow-lg dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:border-blue-700"
+            className="group rounded-2xl border border-zinc-200/80 bg-white p-8 transition hover:border-blue-300 hover:shadow-lg hover:scale-[1.01] dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:border-blue-700 animate-in animate-in-1"
           >
             <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-2xl dark:bg-blue-900/30">
               🧭
@@ -79,7 +92,7 @@ export default async function Home({ params }: Props) {
 
           <Link
             href={`/${lang}/compare`}
-            className="group rounded-2xl border border-zinc-200/80 bg-white p-8 transition hover:border-amber-300 hover:shadow-lg dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:border-amber-700"
+            className="group rounded-2xl border border-zinc-200/80 bg-white p-8 transition hover:border-amber-300 hover:shadow-lg hover:scale-[1.01] dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:border-amber-700 animate-in animate-in-2"
           >
             <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-amber-50 text-2xl dark:bg-amber-900/30">
               ⚡
@@ -98,7 +111,7 @@ export default async function Home({ params }: Props) {
 
         <Link
           href={`/${lang}/guide`}
-          className="mt-6 block rounded-2xl border border-zinc-200/80 bg-white p-8 transition hover:border-emerald-300 hover:shadow-lg dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:border-emerald-700 group"
+          className="mb-20 block rounded-2xl border border-zinc-200/80 bg-white p-8 transition hover:border-emerald-300 hover:shadow-lg hover:scale-[1.01] dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:border-emerald-700 group animate-in animate-in-3"
         >
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
             <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-50 text-2xl dark:bg-emerald-900/30 shrink-0">
@@ -117,6 +130,26 @@ export default async function Home({ params }: Props) {
             </span>
           </div>
         </Link>
+
+        {/* Featured tools */}
+        <section className="animate-in animate-in-3">
+          <div className="flex items-end justify-between mb-6">
+            <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+              {dict.home.featuredTitle}
+            </h2>
+            <Link
+              href={`/${lang}/tools`}
+              className="text-sm font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition"
+            >
+              {dict.home.viewAll.replace("{count}", String(tools.length))} →
+            </Link>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {featuredTools.map((tool) => (
+              <ToolCard key={tool.slug} tool={tool} locale={lang} />
+            ))}
+          </div>
+        </section>
       </div>
     </>
   );

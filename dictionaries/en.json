@@ -16,6 +16,8 @@
     "guideCardTitle": "Usage Guides",
     "guideCardDesc": "{count} detailed tutorials to help you master each AI tool's core features and techniques.",
     "guideCardCTA": "Browse Guides",
+    "featuredTitle": "Featured Tools",
+    "viewAll": "View all {count} tools",
     "breadcrumbHome": "Home"
   },
   "tools": {

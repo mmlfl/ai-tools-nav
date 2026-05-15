@@ -44,7 +44,7 @@ export default async function ToolsPage({ params }: Props) {
       />
       <div className="mx-auto max-w-6xl px-4 py-12">
         <BackLink href={`/${lang}`} label={dict.common.backHome} />
-        <section className="mb-10">
+        <section className="mb-10 animate-in animate-in-1">
           <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-4xl">
             {dict.tools.title}
           </h1>

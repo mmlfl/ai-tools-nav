@@ -23,13 +23,13 @@ export default function ToolCard({ tool, locale }: ToolCardProps) {
   return (
     <Link
       href={`${prefix}/tool/${tool.slug}`}
-      className="group flex flex-col gap-3 rounded-xl border border-zinc-200/80 bg-white p-5 transition hover:border-blue-300 hover:shadow-lg hover:shadow-blue-100/50 dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:border-blue-700 dark:hover:shadow-blue-900/20"
+      className="group flex flex-col gap-3 rounded-xl border border-zinc-200/80 bg-white p-5 transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-100/50 dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:border-blue-700 dark:hover:shadow-blue-900/20"
     >
       <div className="flex items-start justify-between">
-        <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-violet-500 text-lg font-bold text-white">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-violet-500 text-lg font-bold text-white shadow-sm shadow-blue-200/50 dark:shadow-blue-900/30">
           {tName(tool, locale ?? "zh").charAt(0)}
         </div>
-        <span className="rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-600 dark:bg-blue-950 dark:text-blue-400">
+        <span className="rounded-full bg-gradient-to-r from-blue-500/10 to-violet-500/10 px-2.5 py-0.5 text-xs font-medium text-blue-600 dark:text-blue-400">
           {priceLabels[tool.pricing]}
         </span>
       </div>
