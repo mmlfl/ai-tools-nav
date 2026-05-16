@@ -6,6 +6,7 @@ import {
   PRICING_LABELS_EN,
   tName,
   tDesc,
+  getTagLabel,
 } from "@/types/tool";
 import Link from "next/link";
 
@@ -50,7 +51,7 @@ export default function ToolCard({ tool, locale }: ToolCardProps) {
             key={tag}
             className="rounded-md bg-blue-50 px-2 py-0.5 text-xs text-blue-600 dark:bg-blue-950 dark:text-blue-400"
           >
-            {tag}
+            {getTagLabel(tag, locale ?? "zh")}
           </span>
         ))}
       </div>

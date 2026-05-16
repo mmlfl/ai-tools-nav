@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Tool, tName, tDesc, getCategoryLabel, getPricingLabel } from "@/types/tool";
+import { Tool, tName, tDesc, getCategoryLabel, getPricingLabel, getTagLabel } from "@/types/tool";
 import toolsData from "@/data/tools.json";
 import ToolCard from "@/components/ToolCard";
 import BackLink from "@/components/BackLink";
@@ -89,7 +89,7 @@ export default async function ToolDetailPage({ params }: Props) {
                   key={tag}
                   className="rounded-md bg-blue-50 px-3 py-1 text-sm text-blue-600 dark:bg-blue-950 dark:text-blue-400"
                 >
-                  {tag}
+                  {getTagLabel(tag, lang)}
                 </span>
               ))}
             </div>
