@@ -1,0 +1,43 @@
+# 工具官方文档 URL 列表，ingest.py 会自动爬取入库
+chatgpt:
+  docs_urls:
+    - https://openai.com/pricing
+    - https://platform.openai.com/docs/models
+    - https://help.openai.com/en/articles/6825453-chatgpt-release-notes
+
+claude:
+  docs_urls:
+    - https://www.anthropic.com/pricing
+    - https://docs.anthropic.com/en/docs/about-claude/models
+
+gemini:
+  docs_urls:
+    - https://ai.google.dev/gemini-api/docs/models
+
+midjourney:
+  docs_urls:
+    - https://docs.midjourney.com
+
+dall-e:
+  docs_urls:
+    - https://platform.openai.com/docs/guides/images
+
+stable-diffusion:
+  docs_urls:
+    - https://stability.ai/stable-image
+
+sora:
+  docs_urls:
+    - https://openai.com/sora
+
+github-copilot:
+  docs_urls:
+    - https://docs.github.com/en/copilot
+
+cursor:
+  docs_urls:
+    - https://docs.cursor.com
+
+perplexity:
+  docs_urls:
+    - https://docs.perplexity.ai

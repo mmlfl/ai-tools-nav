@@ -1,0 +1,55 @@
+# ChatGPT 资料卡 — 示例填写
+pricing:
+  free_tier: "GPT-4o-mini 无限次 / GPT-4o 每3小时50条 / DALL-E 每天2张"
+  paid_plans:
+    - name: "Plus"
+      price: "$20/month"
+      includes: "GPT-4o 5x用量, 优先访问新功能, DALL·E, 数据分析"
+    - name: "Pro"
+      price: "$200/month"
+      includes: "无限 GPT-4o, o3-pro, Advanced Voice, Operator Agent"
+
+features:
+  - "GPT-4o 旗舰模型, 128K 上下文窗口, 支持多模态 (图片/文件/语音) 输入"
+  - "DALL·E 3 图像生成集成"
+  - "Advanced Voice Mode 语音对话"
+  - "GPTs 自定义角色 + GPT Store 生态"
+  - "Code Interpreter (数据分析/图表/代码执行)"
+  - "Operator — AI Agent 可自主操作浏览器完成订餐、购物等任务"
+
+recent_updates:
+  - date: "2026-01"
+    summary: "GPT-5 发布, 推理能力大幅提升, 支持 Agent 自主执行"
+  - date: "2025-10"
+    summary: "Canvas 模式上线, 支持文档/代码并排协作编辑"
+
+pros:
+  - "多模态能力最完善: 文本+图片+文件+语音+视频一站式"
+  - "生态最强: GPT Store 数十万个自定义 GPT"
+  - "企业级安全与合规认证 (SOC 2, GDPR)"
+
+cons:
+  - "免费版能力受限, 进阶功能需付费"
+  - "高峰期响应速度下降"
+  - "部分专业领域 (医疗/法律) 准确度仍需人工审核"
+
+vs_competitors:
+  - competitor: "claude"
+    advantage: "多模态完整 (图像生成/语音/视频), 生态丰富度远超 Claude"
+    weakness: "长文档分析不如 Claude, Coding Agent 不如 Cursor 专业"
+  - competitor: "gemini"
+    advantage: "独立产品迭代节奏快, 不受 Google 搜索业务牵制"
+    weakness: "不深度集成 Google 生态 (Gmail/Drive/Docs 等)"
+
+benchmarks:
+  lmsys_elo: 1389
+  source: "LMSYS Chatbot Arena 2026-03"
+
+target_users:
+  - "学生/研究员 — 学习辅助、论文写作"
+  - "开发者 — 代码生成与调试"
+  - "创作者 — 写作、设计灵感"
+
+sources:
+  - "https://openai.com/pricing"
+  - "https://lmarena.ai"

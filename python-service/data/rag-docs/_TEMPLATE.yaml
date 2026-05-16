@@ -1,0 +1,8 @@
+# RAG 手动文档模板 — 比 tool-briefs 更详细，适合向量检索分块
+# 用法: 复制为 <slug>.yaml，填入内容后运行 python ingest.py --manual-only
+slug: ""
+
+sections:
+  - heading: ""     # 小节标题，如 "2026年最新功能"
+    body: ""        # 正文内容，可以是多段落的长文本
+    source_url: ""  # 可选，信息来源 URL

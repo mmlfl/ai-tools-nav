@@ -36,6 +36,21 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+python-service/.env
+
+# python
+__pycache__/
+*.pyc
+*.pyo
+.python-version
+
+# claude local
+.claude/settings.local.json
+.claude/worktrees/
+
+# temp
+temp_test.html
+temp_*
 
 # vercel
 .vercel
@@ -46,3 +61,5 @@ public/ads.txt
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/docs
