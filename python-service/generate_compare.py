@@ -1,28 +1,20 @@
 #!/usr/bin/env python3
-"""Tool Comparison Article Generator.
-Reads tools.json, generates comparison Markdown via LangChain + Qwen,
-writes to ../content/compare/zh/
-"""
+"""Tool Comparison Article Generator. Supports --lang zh (default) or --lang en."""
 import json
 import os
 import sys
-from pathlib import Path
 from datetime import date
 
-from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 
-load_dotenv()
+from lib import (
+    get_llm, load_tools, retrieve_and_inject, parse_frontmatter,
+    update_index, save_markdown, content_exists, rate_limit, validate_content,
+)
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-TOOLS_PATH = BASE_DIR / "data" / "tools.json"
-CONTENT_DIR = BASE_DIR / "content" / "compare" / "zh"
-INDEX_PATH = BASE_DIR / "data" / "content-index.json"
-MAX_ARTICLES_PER_RUN = 5
-API_TIMEOUT = 120
+MAX_ARTICLES_PER_RUN = 150
 
-COMPARE_PROMPT = ChatPromptTemplate.from_messages([
+COMPARE_PROMPT_ZH = ChatPromptTemplate.from_messages([
     ("system", """你是一个专业的 AI 工具评测写手。根据提供的工具信息，写一篇深度工具对比文章。
 
 要求：
@@ -49,123 +41,132 @@ date: "{today}"
 ---
 
 ## 概述
-...
-"""),
-    ("user", "请为以下两个工具写对比文章：\n\n工具1：{tool1}\n工具2：{tool2}\n\n分类：{category}")
+..."""),
+    ("user", "请为以下两个工具写对比文章：\n\n工具1：{tool1}\n工具2：{tool2}\n\n分类：{category}"),
+]).partial(today=str(date.today()))
+
+COMPARE_PROMPT_EN = ChatPromptTemplate.from_messages([
+    ("system", """You are a professional AI tool reviewer. Write an in-depth comparison article based on the tool info provided.
+
+Requirements:
+1. Title format: "Tool A vs Tool B: 2026 Comprehensive Comparison"
+2. Use Markdown with YAML frontmatter at the top
+3. YAML frontmatter: title, description, tools (slug array), date (today)
+4. Structure:
+   - ## Overview — 2-3 paragraphs introducing both tools
+   - ## Feature Comparison — at least 1 Markdown table
+   - ## Pricing Comparison — 1 table
+   - ## Use Cases — best scenarios for each tool
+   - ## Verdict & Recommendation — clear recommendation
+   - *Disclaimer*
+5. 1500-2500 words, English
+6. Objective and balanced, list pros and cons for each
+7. At least 4 data rows in every table
+
+Example output format:
+---
+title: "ChatGPT vs Claude: 2026 Comprehensive Comparison"
+description: "A detailed comparison of ChatGPT and Claude covering features, pricing, and use cases"
+tools: ["chatgpt", "claude"]
+date: "{today}"
+---
+
+## Overview
+..."""),
+    ("user", "Write a comparison article for these two tools:\n\nTool 1: {tool1}\nTool 2: {tool2}\n\nCategory: {category}"),
 ]).partial(today=str(date.today()))
 
 
-def load_tools():
-    with open(TOOLS_PATH, "r", encoding="utf-8") as f:
-        return json.load(f)
-
-
-def generate_compare(tool1, tool2, category):
-    llm = ChatOpenAI(
-        model=os.getenv("QWEN_MODEL", "qwen-plus"),
-        base_url=os.getenv("QWEN_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1"),
-        api_key=os.getenv("QWEN_API_KEY"),
-        temperature=0.7,
-        timeout=API_TIMEOUT,
-        max_retries=1,
-    )
-    messages = COMPARE_PROMPT.format_messages(
-        tool1=json.dumps(tool1, ensure_ascii=False, indent=2),
-        tool2=json.dumps(tool2, ensure_ascii=False, indent=2),
-        category=category,
-    )
-    response = llm.invoke(messages)
-    return response.content
-
-
-def save_article(slugs, content):
-    CONTENT_DIR.mkdir(parents=True, exist_ok=True)
-    filename = f"{slugs[0]}-vs-{slugs[1]}.md"
-    filepath = CONTENT_DIR / filename
-    with open(filepath, "w", encoding="utf-8") as f:
-        f.write(content)
-    print(f"Saved: {filepath}")
-    return filename.replace(".md", "")
-
-
-def update_index(slug, frontmatter):
-    INDEX_PATH.parent.mkdir(parents=True, exist_ok=True)
-    if INDEX_PATH.exists():
-        with open(INDEX_PATH, "r", encoding="utf-8") as f:
-            index = json.load(f)
-    else:
-        index = {"compare": [], "list": [], "guide": []}
-
-    entry = {
-        "slug": slug,
-        "title": frontmatter.get("title", ""),
-        "description": frontmatter.get("description", ""),
-        "tools": frontmatter.get("tools", []),
-        "date": frontmatter.get("date", str(date.today())),
-    }
-
-    existing = [i for i in index.get("compare", []) if i["slug"] != slug]
-    existing.append(entry)
-    index["compare"] = existing
-
-    with open(INDEX_PATH, "w", encoding="utf-8") as f:
-        json.dump(index, f, ensure_ascii=False, indent=2)
-    print(f"Updated index: {INDEX_PATH}")
-
-
-def parse_frontmatter(content):
-    import yaml
-    lines = content.split("\n")
-    if lines[0].strip() == "---":
-        try:
-            end = lines.index("---", 1)
-            fm = yaml.safe_load("\n".join(lines[1:end]))
-            return fm or {}
-        except (ValueError, yaml.YAMLError):
-            return {}
-    return {}
-
-
-def main():
-    if not os.getenv("QWEN_API_KEY"):
-        print("Error: QWEN_API_KEY not set.", file=sys.stderr)
-        sys.exit(1)
-
-    tools = load_tools()
+def build_pair_queue(tools):
     categories = {}
     for t in tools:
         categories.setdefault(t["category"], []).append(t)
 
-    generated = 0
+    pairs = []
     for cat, cat_tools in categories.items():
         if len(cat_tools) < 2:
             continue
+        for i in range(len(cat_tools)):
+            for j in range(i + 1, len(cat_tools)):
+                score = cat_tools[i].get("featured", False) + cat_tools[j].get("featured", False)
+                pairs.append((-score, i, j, cat_tools[i], cat_tools[j], cat))
+
+    pairs.sort(key=lambda x: (x[0], x[1], x[2]))
+    return pairs
+
+
+def generate_compare(t1, t2, category, lang):
+    prompt = COMPARE_PROMPT_EN if lang == "en" else COMPARE_PROMPT_ZH
+    llm = get_llm()
+    base_msg = prompt.format_messages(
+        tool1=json.dumps(t1, ensure_ascii=False, indent=2),
+        tool2=json.dumps(t2, ensure_ascii=False, indent=2),
+        category=category,
+    )
+    base_msg[-1].content = retrieve_and_inject(
+        base_msg[-1].content,
+        slugs=[t1["slug"], t2["slug"]],
+        article_type="compare",
+        lang=lang,
+    )
+    response = llm.invoke(base_msg)
+    return response.content
+
+
+def main():
+    lang = "zh"
+    for arg in sys.argv[1:]:
+        if arg.startswith("--lang="):
+            lang = arg.split("=", 1)[1]
+
+    if not os.getenv("QWEN_API_KEY") and not os.getenv("OPENAI_API_KEY"):
+        print("Error: QWEN_API_KEY or OPENAI_API_KEY not set.", file=sys.stderr)
+        sys.exit(1)
+
+    content_dir = f"content/compare/{lang}"
+    tools = load_tools()
+    pairs = build_pair_queue(tools)
+
+    generated = 0
+    for _, _, _, t1, t2, cat in pairs:
         if generated >= MAX_ARTICLES_PER_RUN:
             break
 
-        t1, t2 = cat_tools[0], cat_tools[1]
-        slugs = [t1["slug"], t2["slug"]]
-        output_filename = f"{slugs[0]}-vs-{slugs[1]}"
-
-        if (CONTENT_DIR / f"{output_filename}.md").exists():
-            print(f"Skip existing: {output_filename}.md")
+        filename = f"{t1['slug']}-vs-{t2['slug']}.md"
+        if content_exists(content_dir, filename):
             continue
 
-        print(f"[{generated + 1}/{MAX_ARTICLES_PER_RUN}] Generating: {t1['name']} vs {t2['name']} ({cat})")
+        n1 = t1.get("name_en" if lang == "en" else "name", t1["name"])
+        n2 = t2.get("name_en" if lang == "en" else "name", t2["name"])
+        print(f"[{generated + 1}] Generating: {n1} vs {n2} ({cat})")
+
         for attempt in range(2):
             try:
-                content = generate_compare(t1, t2, cat)
-                slug = save_article(slugs, content)
+                content = generate_compare(t1, t2, cat, lang)
+                ok, err = validate_content(content)
+                if not ok:
+                    print(f"  Validation failed: {err}, retrying...")
+                    continue
+
+                slug = save_markdown(content_dir, filename, content)
                 fm = parse_frontmatter(content)
-                update_index(slug, fm)
+                update_index("compare", slug, {
+                    "slug": slug,
+                    "title": fm.get("title", ""),
+                    "description": fm.get("description", ""),
+                    "tools": fm.get("tools", [t1["slug"], t2["slug"]]),
+                    "date": fm.get("date", str(date.today())),
+                    "lang": lang,
+                })
                 generated += 1
+                rate_limit()
                 break
             except Exception as e:
                 print(f"  Attempt {attempt + 1} failed: {e}", file=sys.stderr)
                 if attempt == 1:
-                    print(f"  Giving up on {output_filename}")
+                    print(f"  Giving up on {filename}")
 
-    print(f"Done. Generated {generated} comparison articles.")
+    print(f"Done. Generated {generated} comparison articles ({lang}).")
 
 
 if __name__ == "__main__":

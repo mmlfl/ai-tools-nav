@@ -1,28 +1,20 @@
 #!/usr/bin/env python3
-"""Tool Guide Generator.
-Reads tools.json, generates individual tool guide Markdown via LangChain + Qwen,
-writes to ../content/guide/zh/
-"""
+"""Tool Guide Generator. Supports --lang zh (default) or --lang en."""
 import json
 import os
 import sys
-from pathlib import Path
 from datetime import date
 
-from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 
-load_dotenv()
+from lib import (
+    get_llm, load_tools, retrieve_and_inject, parse_frontmatter,
+    update_index, save_markdown, content_exists, rate_limit, validate_content,
+)
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-TOOLS_PATH = BASE_DIR / "data" / "tools.json"
-CONTENT_DIR = BASE_DIR / "content" / "guide" / "zh"
-INDEX_PATH = BASE_DIR / "data" / "content-index.json"
-MAX_ARTICLES_PER_RUN = 5
-API_TIMEOUT = 120
+MAX_ARTICLES_PER_RUN = 100
 
-GUIDE_PROMPT = ChatPromptTemplate.from_messages([
+GUIDE_PROMPT_ZH = ChatPromptTemplate.from_messages([
     ("system", """你是一个专业的 AI 工具使用教程写手。根据提供的工具信息，写一篇详细的工具使用指南。
 
 要求：
@@ -51,87 +43,74 @@ date: "{today}"
 ---
 
 ## 工具简介
-...
-"""),
-    ("user", "请为以下工具写一篇详细的使用指南：\n\n{tool}")
+..."""),
+    ("user", "请为以下工具写一篇详细的使用指南：\n\n{tool}"),
+]).partial(today=str(date.today()))
+
+GUIDE_PROMPT_EN = ChatPromptTemplate.from_messages([
+    ("system", """You are a professional AI tool tutorial writer. Write a detailed usage guide based on the tool info provided.
+
+Requirements:
+1. Title format: "{{Tool Name}} Complete Guide: From Beginner to Expert"
+2. Use Markdown with YAML frontmatter at the top
+3. YAML frontmatter: title, description, tool (slug), date (today)
+4. Structure:
+   - ## Overview — 1-2 paragraphs introducing the tool
+   - ## Core Features — at least 1 Markdown table listing features
+   - ## How to Use — step-by-step instructions
+   - ## Pricing — plans and costs
+   - ## Use Cases — at least 3 ideal scenarios
+   - ## Pros & Cons — list both
+   - ## Alternatives — 2-3 similar tools
+   - *Disclaimer*
+5. 1500-2500 words, English
+6. Practical, hands-on guidance
+7. At least 4 rows in every table
+
+Example output format:
+---
+title: "ChatGPT Complete Guide: From Beginner to Expert"
+description: "A comprehensive guide to ChatGPT's core features, usage, pricing, and use cases"
+tool: "chatgpt"
+date: "{today}"
+---
+
+## Overview
+..."""),
+    ("user", "Write a detailed usage guide for this tool:\n\n{tool}"),
 ]).partial(today=str(date.today()))
 
 
-def load_tools():
-    with open(TOOLS_PATH, "r", encoding="utf-8") as f:
-        return json.load(f)
+def sort_tools(tools):
+    return sorted(tools, key=lambda t: (not t.get("featured", False)))
 
 
-def generate_guide(tool):
-    llm = ChatOpenAI(
-        model=os.getenv("QWEN_MODEL", "qwen-plus"),
-        base_url=os.getenv("QWEN_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1"),
-        api_key=os.getenv("QWEN_API_KEY"),
-        temperature=0.7,
-        timeout=API_TIMEOUT,
-        max_retries=1,
-    )
-    messages = GUIDE_PROMPT.format_messages(
+def generate_guide(tool, lang):
+    prompt = GUIDE_PROMPT_EN if lang == "en" else GUIDE_PROMPT_ZH
+    llm = get_llm()
+    base_msg = prompt.format_messages(
         tool=json.dumps(tool, ensure_ascii=False, indent=2),
     )
-    response = llm.invoke(messages)
+    base_msg[-1].content = retrieve_and_inject(
+        base_msg[-1].content, slugs=[tool["slug"]],
+        article_type="guide", lang=lang,
+    )
+    response = llm.invoke(base_msg)
     return response.content
 
 
-def save_article(slug, content):
-    CONTENT_DIR.mkdir(parents=True, exist_ok=True)
-    filename = f"{slug}.md"
-    filepath = CONTENT_DIR / filename
-    with open(filepath, "w", encoding="utf-8") as f:
-        f.write(content)
-    print(f"Saved: {filepath}")
-    return filename.replace(".md", "")
-
-
-def update_index(slug, frontmatter):
-    INDEX_PATH.parent.mkdir(parents=True, exist_ok=True)
-    if INDEX_PATH.exists():
-        with open(INDEX_PATH, "r", encoding="utf-8") as f:
-            index = json.load(f)
-    else:
-        index = {"compare": [], "list": [], "guide": []}
-
-    entry = {
-        "slug": slug,
-        "title": frontmatter.get("title", ""),
-        "description": frontmatter.get("description", ""),
-        "tool": frontmatter.get("tool", ""),
-        "date": frontmatter.get("date", str(date.today())),
-    }
-
-    existing = [i for i in index.get("guide", []) if i["slug"] != slug]
-    existing.append(entry)
-    index["guide"] = existing
-
-    with open(INDEX_PATH, "w", encoding="utf-8") as f:
-        json.dump(index, f, ensure_ascii=False, indent=2)
-    print(f"Updated index: {INDEX_PATH}")
-
-
-def parse_frontmatter(content):
-    import yaml
-    lines = content.split("\n")
-    if lines[0].strip() == "---":
-        try:
-            end = lines.index("---", 1)
-            fm = yaml.safe_load("\n".join(lines[1:end]))
-            return fm or {}
-        except (ValueError, yaml.YAMLError):
-            return {}
-    return {}
-
-
 def main():
-    if not os.getenv("QWEN_API_KEY"):
-        print("Error: QWEN_API_KEY not set.", file=sys.stderr)
+    lang = "zh"
+    for arg in sys.argv[1:]:
+        if arg.startswith("--lang="):
+            lang = arg.split("=", 1)[1]
+
+    if not os.getenv("QWEN_API_KEY") and not os.getenv("OPENAI_API_KEY"):
+        print("Error: QWEN_API_KEY or OPENAI_API_KEY not set.", file=sys.stderr)
         sys.exit(1)
 
-    tools = load_tools()
+    content_dir = f"content/guide/{lang}"
+    tools = sort_tools(load_tools())
 
     generated = 0
     for tool in tools:
@@ -139,27 +118,42 @@ def main():
             break
 
         slug = tool["slug"]
-        output_filename = slug
+        filename = f"{slug}.md"
 
-        if (CONTENT_DIR / f"{output_filename}.md").exists():
-            print(f"Skip existing: {output_filename}.md")
+        if content_exists(content_dir, filename):
+            print(f"Skip existing: {filename}")
             continue
 
-        print(f"[{generated + 1}/{MAX_ARTICLES_PER_RUN}] Generating guide for: {tool['name']} ({tool['category']})")
+        name = tool.get("name_en" if lang == "en" else "name", tool["name"])
+        print(f"[{generated + 1}] Generating guide for: {name} ({tool['category']})")
+
         for attempt in range(2):
             try:
-                content = generate_guide(tool)
-                saved_slug = save_article(slug, content)
+                content = generate_guide(tool, lang)
+                ok, err = validate_content(content)
+                if not ok:
+                    print(f"  Validation failed: {err}, retrying...")
+                    continue
+
+                saved_slug = save_markdown(content_dir, filename, content)
                 fm = parse_frontmatter(content)
-                update_index(saved_slug, fm)
+                update_index("guide", saved_slug, {
+                    "slug": saved_slug,
+                    "title": fm.get("title", ""),
+                    "description": fm.get("description", ""),
+                    "tool": fm.get("tool", slug),
+                    "date": fm.get("date", str(date.today())),
+                    "lang": lang,
+                })
                 generated += 1
+                rate_limit()
                 break
             except Exception as e:
                 print(f"  Attempt {attempt + 1} failed: {e}", file=sys.stderr)
                 if attempt == 1:
-                    print(f"  Giving up on {output_filename}")
+                    print(f"  Giving up on {filename}")
 
-    print(f"Done. Generated {generated} guide articles.")
+    print(f"Done. Generated {generated} guide articles ({lang}).")
 
 
 if __name__ == "__main__":
