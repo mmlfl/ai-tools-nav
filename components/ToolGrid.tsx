@@ -43,8 +43,8 @@ export default function ToolGrid({ tools, locale, searchPlaceholder, emptyTitle,
                 onClick={() => setPricing(p)}
                 className={`rounded-lg px-3 py-1.5 text-xs font-medium transition ${
                   pricing === p
-                    ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-                    : "bg-zinc-100 text-zinc-500 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700"
+                    ? "bg-foreground text-canvas"
+                    : "bg-surface-elevated text-muted hover:bg-hairline dark:hover:bg-hairline"
                 }`}
               >
                 {p === null

@@ -55,10 +55,10 @@ export default async function GuideListPage({ params }: Props) {
       <div className="mx-auto max-w-6xl px-4 py-12">
         <BackLink href={`/${lang}`} label={dict.common.backHome} />
         <section className="mb-8 animate-in animate-in-1">
-          <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-4xl">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             {dict.guide.listingTitle}
           </h1>
-          <p className="mt-3 text-lg text-zinc-500 dark:text-zinc-400">
+          <p className="mt-3 text-lg text-muted">
             {dict.guide.listingSubtitle}
           </p>
         </section>

@@ -115,14 +115,14 @@ export default function RecommendChat({ isOpen, onClose, labels }: Props) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bottom-24 right-6 z-50 flex w-96 flex-col rounded-2xl border border-zinc-200 bg-white shadow-2xl dark:border-zinc-700 dark:bg-zinc-900">
-      <div className="flex items-center justify-between border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
-        <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+    <div className="fixed bottom-24 right-6 z-50 flex w-96 flex-col rounded-2xl border border-hairline bg-surface shadow-2xl">
+      <div className="flex items-center justify-between border-b border-hairline px-4 py-3">
+        <h3 className="text-sm font-semibold text-foreground">
           {labels?.title ?? "AI 工具推荐"}
         </h3>
         <button
           onClick={onClose}
-          className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
+          className="text-muted hover:text-foreground"
           aria-label={labels?.closeLabel ?? "关闭"}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -133,7 +133,7 @@ export default function RecommendChat({ isOpen, onClose, labels }: Props) {
 
       <div className="h-80 overflow-y-auto px-4 py-3 space-y-3">
         {messages.length === 0 && (
-          <p className="text-sm text-zinc-400 dark:text-zinc-500">
+          <p className="text-sm text-muted">
             {labels?.intro ??
               "告诉我你想做什么，我帮你推荐最适合的 AI 工具。\n比如：「我想做一个产品宣传视频」"}
           </p>
@@ -143,7 +143,7 @@ export default function RecommendChat({ isOpen, onClose, labels }: Props) {
             key={i}
             className={`text-sm whitespace-pre-wrap ${
               msg.role === "user"
-                ? "ml-8 rounded-lg bg-zinc-100 px-3 py-2 dark:bg-zinc-800"
+                ? "ml-8 rounded-lg bg-surface-elevated px-3 py-2"
                 : "mr-8"
             }`}
           >
@@ -151,7 +151,7 @@ export default function RecommendChat({ isOpen, onClose, labels }: Props) {
           </div>
         ))}
         {streaming && messages[messages.length - 1]?.content === "" && (
-          <div className="flex gap-1 text-zinc-400 text-sm">
+          <div className="flex gap-1 text-muted text-sm">
             <span className="animate-bounce">.</span>
             <span className="animate-bounce" style={{ animationDelay: "0.1s" }}>.</span>
             <span className="animate-bounce" style={{ animationDelay: "0.2s" }}>.</span>
@@ -160,7 +160,7 @@ export default function RecommendChat({ isOpen, onClose, labels }: Props) {
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="border-t border-zinc-100 px-4 py-3 dark:border-zinc-800">
+      <div className="border-t border-hairline px-4 py-3">
         <div className="flex gap-2">
           <input
             ref={inputRef}
@@ -170,7 +170,7 @@ export default function RecommendChat({ isOpen, onClose, labels }: Props) {
             onKeyDown={handleKeyDown}
             placeholder={labels?.placeholder ?? "描述你的需求..."}
             disabled={streaming}
-            className="flex-1 rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-zinc-400 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:border-zinc-500"
+            className="flex-1 rounded-lg border border-hairline bg-canvas px-3 py-2 text-sm text-foreground outline-none focus:border-muted"
           />
           <button
             onClick={sendMessage}

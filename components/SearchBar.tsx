@@ -11,7 +11,7 @@ export default function SearchBar({ value, onChange, placeholder = "搜索 AI �
     <div className="relative">
       <svg
         suppressHydrationWarning
-        className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400"
+        className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted"
         fill="none"
         stroke="currentColor"
         strokeWidth="2"
@@ -25,7 +25,7 @@ export default function SearchBar({ value, onChange, placeholder = "搜索 AI �
         value={value}
         onChange={(e) => onChange(e.target.value)}
         aria-label={placeholder}
-        className="w-full rounded-lg border border-zinc-200 bg-white py-2.5 pl-10 pr-4 text-sm outline-none transition placeholder:text-zinc-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 dark:border-zinc-800 dark:bg-zinc-900 dark:focus:border-blue-500 dark:focus:ring-blue-900/30"
+        className="w-full rounded-lg border border-hairline bg-surface py-2.5 pl-10 pr-4 text-sm text-foreground outline-none transition placeholder:text-muted focus:border-blue-400 focus:ring-2 focus:ring-blue-100 dark:focus:border-blue-500 dark:focus:ring-blue-900/30"
       />
     </div>
   );

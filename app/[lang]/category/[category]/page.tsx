@@ -58,9 +58,9 @@ export default async function CategoryPage({ params }: Props) {
       />
       <div className="mx-auto max-w-6xl px-4 py-12">
         <BackLink href={`/${lang}/tools`} label={dict.tools.title} />
-        <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">
           {getCategoryLabel(cat, lang)}
-          <span className="ml-3 text-lg font-normal text-zinc-400">
+          <span className="ml-3 text-lg font-normal text-muted">
             {tools.length} {lang === "zh" ? "个工具" : "tools"}
           </span>
         </h1>

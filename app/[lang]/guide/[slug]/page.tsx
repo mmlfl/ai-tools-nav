@@ -60,8 +60,8 @@ export default async function GuidePage({ params }: Props) {
 
         <article className="prose prose-zinc dark:prose-invert max-w-none">
           <h1>{page.frontmatter.title}</h1>
-          <p className="text-zinc-500">{page.frontmatter.description}</p>
-          <time className="text-sm text-zinc-400" dateTime={page.frontmatter.date}>
+          <p className="text-muted">{page.frontmatter.description}</p>
+          <time className="text-sm text-muted" dateTime={page.frontmatter.date}>
             {page.frontmatter.date}
           </time>
           <hr />
@@ -70,7 +70,7 @@ export default async function GuidePage({ params }: Props) {
 
         {page.tool && (
           <section className="mt-12">
-            <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">
+            <h2 className="text-xl font-semibold text-foreground">
               {dict.guide.relatedTools}
             </h2>
             <div className="mt-4 max-w-sm">
@@ -81,7 +81,7 @@ export default async function GuidePage({ params }: Props) {
 
         {comparePages.length > 0 && (
           <section className="mt-12">
-            <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">
+            <h2 className="text-xl font-semibold text-foreground">
               {dict.tool.relatedCompare}
             </h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -89,12 +89,12 @@ export default async function GuidePage({ params }: Props) {
                 <Link
                   key={p.slug}
                   href={`/${lang}/compare/${p.slug}`}
-                  className="group rounded-xl border border-zinc-200/80 bg-white p-4 transition hover:border-zinc-300 hover:shadow-sm dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:border-zinc-700"
+                  className="group rounded-xl border border-hairline bg-surface p-4 transition hover:border-blue-300 hover:shadow-sm dark:hover:border-blue-700"
                 >
-                  <h3 className="text-sm font-medium text-zinc-900 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                  <h3 className="text-sm font-medium text-foreground group-hover:text-blue-600 dark:group-hover:text-blue-400">
                     {p.frontmatter.title}
                   </h3>
-                  <p className="mt-1 line-clamp-1 text-xs text-zinc-500 dark:text-zinc-400">
+                  <p className="mt-1 line-clamp-1 text-xs text-muted">
                     {p.frontmatter.description}
                   </p>
                 </Link>

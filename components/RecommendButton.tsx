@@ -16,7 +16,7 @@ export default function RecommendButton({
   return (
     <button
       onClick={onClick}
-      className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-zinc-900 text-white shadow-lg transition-all hover:scale-105 hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
+      className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-foreground text-canvas shadow-lg transition-all hover:scale-105 hover:opacity-90"
       aria-label={isOpen ? closeLabel : openLabel}
     >
       {isOpen ? (

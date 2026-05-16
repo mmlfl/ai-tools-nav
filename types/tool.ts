@@ -1,5 +1,15 @@
 export type Category = "chat" | "image" | "video" | "code" | "audio" | "office" | "search";
 
+export const CATEGORY_TAG_COLORS: Record<Category, string> = {
+  chat: "bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300",
+  image: "bg-pink-50 text-pink-700 dark:bg-pink-950 dark:text-pink-300",
+  video: "bg-violet-50 text-violet-700 dark:bg-violet-950 dark:text-violet-300",
+  code: "bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300",
+  audio: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300",
+  office: "bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300",
+  search: "bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-300",
+};
+
 export type Pricing = "free" | "freemium" | "paid" | "waitlist";
 
 export interface Tool {

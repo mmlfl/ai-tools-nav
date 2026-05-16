@@ -57,13 +57,13 @@ export default async function NewsDetailPage({ params }: Props) {
       <div className="mx-auto max-w-3xl px-4 py-12">
         <BackLink href={`/${lang}/news`} label={dict.news.breadcrumb} />
 
-        <article className="rounded-2xl border border-zinc-200/80 bg-white p-8 dark:border-zinc-800/80 dark:bg-zinc-900">
-          <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{page.frontmatter.title}</h1>
-          <p className="mt-2 text-zinc-500 dark:text-zinc-400">{page.frontmatter.description}</p>
-          <time dateTime={page.frontmatter.date} className="mt-2 inline-block text-sm text-zinc-400 dark:text-zinc-500">
+        <article className="rounded-2xl border border-hairline bg-surface p-8">
+          <h1 className="text-2xl font-bold text-foreground">{page.frontmatter.title}</h1>
+          <p className="mt-2 text-muted">{page.frontmatter.description}</p>
+          <time dateTime={page.frontmatter.date} className="mt-2 inline-block text-sm text-muted">
             {page.frontmatter.date}
           </time>
-          <hr className="my-6 border-zinc-200 dark:border-zinc-800" />
+          <hr className="my-6 border-hairline" />
           <div
             className="prose prose-zinc dark:prose-invert max-w-none"
             dangerouslySetInnerHTML={{ __html: page.html }}
@@ -72,7 +72,7 @@ export default async function NewsDetailPage({ params }: Props) {
 
         {page.mentionedTools.length > 0 && (
           <section className="mt-12">
-            <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">
+            <h2 className="text-xl font-semibold text-foreground">
               {lang === "en" ? "Tools Mentioned" : "提及的工具"}
             </h2>
             <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -83,7 +83,7 @@ export default async function NewsDetailPage({ params }: Props) {
           </section>
         )}
 
-        <footer className="mt-12 pt-6 border-t border-zinc-200/80 dark:border-zinc-800/80 text-center">
+        <footer className="mt-12 pt-6 border-t border-hairline text-center">
           <Link
             href={`/${lang}/news`}
             className="text-sm text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition"

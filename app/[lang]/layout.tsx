@@ -74,14 +74,14 @@ export default async function LangLayout({ children, params }: Props) {
       <head>
           <meta name="baidu_union_verify" content="1c759b33f41e54f0397ffd994e1e42aa" />
         </head>
-        <body className="min-h-full flex flex-col font-sans bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
+        <body className="min-h-full flex flex-col font-sans bg-canvas text-foreground">
         <WebSite />
-        <header className="sticky top-0 z-50 border-b border-zinc-200/80 bg-white/80 backdrop-blur-sm dark:border-zinc-800/80 dark:bg-zinc-950/80">
+        <header className="sticky top-0 z-50 border-b border-hairline bg-canvas/90 backdrop-blur-sm">
           <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-blue-500 via-violet-500 to-blue-500 opacity-70" />
           <nav className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
             <Link
               href={`/${lang}`}
-              className="bg-gradient-to-r from-blue-600 to-violet-500 bg-clip-text text-lg font-bold tracking-tight text-transparent"
+              className="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-lg font-bold tracking-tight text-transparent"
             >
               AI Tools Nav
             </Link>
@@ -91,7 +91,7 @@ export default async function LangLayout({ children, params }: Props) {
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-zinc-500 transition hover:text-blue-600 dark:hover:text-blue-400"
+                className="text-sm text-muted transition hover:text-blue-600 dark:hover:text-blue-400"
               >
                 GitHub
               </a>
@@ -99,8 +99,8 @@ export default async function LangLayout({ children, params }: Props) {
           </nav>
         </header>
         <main className="flex-1">{children}</main>
-        <footer className="border-t border-zinc-200/80 bg-white/60 dark:border-zinc-800/80 dark:bg-zinc-950/60">
-          <div className="mx-auto max-w-6xl px-4 py-8 text-center text-sm text-zinc-400">
+        <footer className="border-t border-hairline bg-surface">
+          <div className="mx-auto max-w-6xl px-4 py-8 text-center text-sm text-muted">
             {dict.footer.replace("{year}", String(year))}
           </div>
         </footer>

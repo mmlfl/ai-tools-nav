@@ -21,11 +21,11 @@ export default function NotFound() {
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col items-center px-4 py-24 text-center">
-      <p className="text-7xl font-bold text-zinc-300 dark:text-zinc-700">404</p>
-      <h1 className="mt-4 text-xl font-semibold text-zinc-900 dark:text-zinc-100">
+      <p className="text-7xl font-bold text-hairline">404</p>
+      <h1 className="mt-4 text-xl font-semibold text-foreground">
         {t.title}
       </h1>
-      <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
+      <p className="mt-2 text-sm text-muted">
         {t.description}
       </p>
       <Link

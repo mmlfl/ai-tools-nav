@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Tool, tName, tDesc, getCategoryLabel, getPricingLabel, getTagLabel } from "@/types/tool";
+import { Tool, tName, tDesc, getCategoryLabel, getPricingLabel, getTagLabel, CATEGORY_TAG_COLORS } from "@/types/tool";
 import toolsData from "@/data/tools.json";
 import ToolCard from "@/components/ToolCard";
 import BackLink from "@/components/BackLink";
@@ -68,20 +68,20 @@ export default async function ToolDetailPage({ params }: Props) {
       <div className="mx-auto max-w-3xl px-4 py-12">
         <BackLink href={`/${lang}`} label={dict.common.backHome} />
 
-        <article className="rounded-2xl border border-zinc-200/80 bg-white p-8 dark:border-zinc-800/80 dark:bg-zinc-900">
+        <article className="rounded-2xl border border-hairline bg-surface p-8">
           <div className="flex items-start gap-5">
-            <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-zinc-100 text-2xl font-bold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+            <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-surface-elevated text-2xl font-bold text-muted">
               {tName(tool, lang).charAt(0)}
             </div>
             <div className="flex-1">
-              <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{tName(tool, lang)}</h1>
-              <p className="mt-2 text-zinc-500 dark:text-zinc-400">{tDesc(tool, lang)}</p>
+              <h1 className="text-2xl font-bold text-foreground">{tName(tool, lang)}</h1>
+              <p className="mt-2 text-muted">{tDesc(tool, lang)}</p>
             </div>
           </div>
 
           <div className="mt-6 flex flex-wrap gap-4">
             <div className="flex flex-wrap gap-2">
-              <span className="rounded-md bg-blue-50 px-3 py-1 text-sm font-medium text-blue-600 dark:bg-blue-950 dark:text-blue-400">
+              <span className={`rounded-md px-3 py-1 text-sm font-medium ${CATEGORY_TAG_COLORS[tool.category]}`}>
                 {getCategoryLabel(tool.category, lang)}
               </span>
               {tool.tags.map((tag) => (
@@ -93,7 +93,7 @@ export default async function ToolDetailPage({ params }: Props) {
                 </span>
               ))}
             </div>
-            <span className="rounded-lg bg-zinc-100 px-3 py-1 text-sm font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
+            <span className="rounded-lg bg-surface-elevated px-3 py-1 text-sm font-medium text-muted">
               {getPricingLabel(tool.pricing, lang)}
             </span>
           </div>
@@ -113,7 +113,7 @@ export default async function ToolDetailPage({ params }: Props) {
 
         {relatedTools.length > 0 && (
           <section className="mt-12">
-            <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">{dict.tool.similarTools}</h2>
+            <h2 className="text-xl font-semibold text-foreground">{dict.tool.similarTools}</h2>
             <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {relatedTools.map((t) => (
                 <ToolCard key={t.slug} tool={t} locale={lang} />
@@ -124,18 +124,18 @@ export default async function ToolDetailPage({ params }: Props) {
 
         {comparePages.length > 0 && (
           <section className="mt-12">
-            <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">{dict.tool.relatedCompare}</h2>
+            <h2 className="text-xl font-semibold text-foreground">{dict.tool.relatedCompare}</h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {comparePages.map((p) => (
                 <Link
                   key={p.slug}
                   href={`/${lang}/compare/${p.slug}`}
-                  className="group rounded-xl border border-zinc-200/80 bg-white p-4 transition hover:border-zinc-300 hover:shadow-sm dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:border-zinc-700"
+                  className="group rounded-xl border border-hairline bg-surface p-4 transition hover:border-blue-300 hover:shadow-sm dark:hover:border-blue-700"
                 >
-                  <h3 className="text-sm font-medium text-zinc-900 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                  <h3 className="text-sm font-medium text-foreground group-hover:text-blue-600 dark:group-hover:text-blue-400">
                     {p.frontmatter.title}
                   </h3>
-                  <p className="mt-1 line-clamp-1 text-xs text-zinc-500 dark:text-zinc-400">
+                  <p className="mt-1 line-clamp-1 text-xs text-muted">
                     {p.frontmatter.description}
                   </p>
                 </Link>
@@ -146,19 +146,19 @@ export default async function ToolDetailPage({ params }: Props) {
 
         {guidePage && (
           <section className="mt-12">
-            <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">{dict.tool.relatedGuide}</h2>
+            <h2 className="text-xl font-semibold text-foreground">{dict.tool.relatedGuide}</h2>
             <div className="mt-4">
               <Link
                 href={`/${lang}/guide/${guidePage.slug}`}
-                className="group rounded-xl border border-zinc-200/80 bg-white p-5 transition hover:border-emerald-300 hover:shadow-sm dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:border-emerald-700 block"
+                className="group rounded-xl border border-hairline bg-surface p-5 transition hover:border-emerald-300 hover:shadow-sm dark:hover:border-emerald-700 block"
               >
-                <h3 className="font-medium text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400">
+                <h3 className="font-medium text-foreground group-hover:text-emerald-600 dark:group-hover:text-emerald-400">
                   {guidePage.frontmatter.title}
                 </h3>
-                <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+                <p className="mt-1 text-sm text-muted">
                   {guidePage.frontmatter.description}
                 </p>
-                <span className="mt-2 inline-block text-xs text-zinc-400 dark:text-zinc-500">
+                <span className="mt-2 inline-block text-xs text-muted">
                   {guidePage.frontmatter.date}
                 </span>
               </Link>

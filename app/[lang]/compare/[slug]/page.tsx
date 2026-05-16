@@ -58,8 +58,8 @@ export default async function ComparePage({ params }: Props) {
 
         <article className="prose prose-zinc dark:prose-invert max-w-none">
           <h1>{page.frontmatter.title}</h1>
-          <p className="text-zinc-500">{page.frontmatter.description}</p>
-          <time className="text-sm text-zinc-400" dateTime={page.frontmatter.date}>
+          <p className="text-muted">{page.frontmatter.description}</p>
+          <time className="text-sm text-muted" dateTime={page.frontmatter.date}>
             {page.frontmatter.date}
           </time>
           <hr />
@@ -68,7 +68,7 @@ export default async function ComparePage({ params }: Props) {
 
         {page.relatedTools.length > 0 && (
           <section className="mt-12">
-            <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">
+            <h2 className="text-xl font-semibold text-foreground">
               {dict.compare.toolsInArticle}
             </h2>
             <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

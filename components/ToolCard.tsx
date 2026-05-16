@@ -4,6 +4,7 @@ import {
   PRICING_LABELS,
   CATEGORY_LABELS_EN,
   PRICING_LABELS_EN,
+  CATEGORY_TAG_COLORS,
   tName,
   tDesc,
   getTagLabel,
@@ -24,7 +25,7 @@ export default function ToolCard({ tool, locale }: ToolCardProps) {
   return (
     <Link
       href={`${prefix}/tool/${tool.slug}`}
-      className="group flex flex-col gap-3 rounded-xl border border-zinc-200/80 bg-white p-5 transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-100/50 dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:border-blue-700 dark:hover:shadow-blue-900/20"
+      className="group flex flex-col gap-3 rounded-xl border border-hairline bg-surface p-5 transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-100/50 dark:hover:border-blue-700 dark:hover:shadow-blue-900/20"
     >
       <div className="flex items-start justify-between">
         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-violet-500 text-lg font-bold text-white shadow-sm shadow-blue-200/50 dark:shadow-blue-900/30">
@@ -35,15 +36,15 @@ export default function ToolCard({ tool, locale }: ToolCardProps) {
         </span>
       </div>
       <div>
-        <h3 className="font-semibold text-zinc-900 dark:text-zinc-100">
+        <h3 className="font-semibold text-foreground">
           {tName(tool, locale ?? "zh")}
         </h3>
-        <p className="mt-1 line-clamp-2 text-sm text-zinc-500 dark:text-zinc-400">
+        <p className="mt-1 line-clamp-2 text-sm text-muted">
           {tDesc(tool, locale ?? "zh")}
         </p>
       </div>
       <div className="flex flex-wrap gap-1.5">
-        <span className="rounded-md bg-zinc-100 px-2 py-0.5 text-xs text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
+        <span className={`rounded-md px-2 py-0.5 text-xs ${CATEGORY_TAG_COLORS[tool.category]}`}>
           {catLabels[tool.category]}
         </span>
         {tool.tags.slice(0, 3).map((tag) => (

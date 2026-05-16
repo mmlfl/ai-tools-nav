@@ -7,11 +7,11 @@ export default function Loading() {
           {[...Array(6)].map((_, i) => (
             <div
               key={i}
-              className="h-40 rounded-xl border border-zinc-200/80 bg-white p-5 dark:border-zinc-800/80 dark:bg-zinc-900"
+              className="h-40 rounded-xl border border-hairline bg-surface p-5"
             >
               <div className="h-5 w-3/4 rounded bg-blue-100 dark:bg-blue-900/30" />
-              <div className="mt-2 h-4 w-full rounded bg-zinc-100 dark:bg-zinc-800/60" />
-              <div className="mt-1 h-4 w-2/3 rounded bg-zinc-100 dark:bg-zinc-800/60" />
+              <div className="mt-2 h-4 w-full rounded bg-surface-elevated" />
+              <div className="mt-1 h-4 w-2/3 rounded bg-surface-elevated" />
             </div>
           ))}
         </div>
