@@ -18,6 +18,9 @@
     "guideCardTitle": "Usage Guides",
     "guideCardDesc": "{count} detailed tutorials to help you master each AI tool's core features and techniques.",
     "guideCardCTA": "Browse Guides",
+    "newsCardTitle": "AI News",
+    "newsCardDesc": "{count} AI news briefs covering the latest updates and industry trends of popular AI tools.",
+    "newsCardCTA": "View News",
     "featuredTitle": "Featured Tools",
     "viewAll": "View all {count} tools",
     "breadcrumbHome": "Home"
@@ -54,6 +57,14 @@
     "emptyText": "No usage guides yet",
     "noMatchText": "No matching usage guides",
     "searchPlaceholder": "Search tools, e.g. Midjourney, Sora…"
+  },
+  "news": {
+    "listingTitle": "AI News",
+    "listingSubtitle": "Daily AI tools news briefs tracking the latest industry trends",
+    "breadcrumb": "AI News",
+    "emptyText": "No news briefs yet",
+    "noMatchText": "No matching news briefs",
+    "searchPlaceholder": "Search news..."
   },
   "category": {
     "title": "{category} AI Tools",
@@ -107,6 +118,9 @@
     "guideTitle": "AI Tool Guides — From Beginner to Expert",
     "guideDescription": "Detailed tutorials for 20+ AI tools covering core features, step-by-step instructions, pricing, and use cases to help you unlock each tool's full potential.",
     "guideOGDescription": "Detailed tutorials for 20+ AI tools to help you unlock their full potential.",
+    "newsTitle": "AI News - Daily AI Tools Updates",
+    "newsDescription": "Daily AI tools news briefs covering the latest from ChatGPT, Claude, DeepSeek, and more.",
+    "newsOGDescription": "Daily AI news briefs tracking the latest from popular AI tools.",
     "notFoundTitle": "404 - Page Not Found",
     "siteKeywords": ["AI tools", "artificial intelligence", "AI directory", "ChatGPT", "AI coding", "AI image", "AI video", "AI recommendations"]
   },

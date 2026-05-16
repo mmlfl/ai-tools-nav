@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Tool as ToolType } from "@/types/tool";
 import toolsData from "@/data/tools.json";
-import { getAllComparePages, getAllGuidePages } from "@/lib/content";
+import { getAllComparePages, getAllGuidePages, getLatestNewsPages } from "@/lib/content";
 import { getDictionary, hasLocale, type Locale } from "@/lib/dictionary";
 import { BreadcrumbList, WebSite } from "@/components/StructuredData";
 import ToolCard from "@/components/ToolCard";
@@ -37,6 +37,7 @@ export default async function Home({ params }: Props) {
 
   const compareCount = getAllComparePages().length;
   const guideCount = getAllGuidePages().length;
+  const newsCount = getLatestNewsPages(lang, 20).length;
   const featuredTools = tools.slice(0, 6);
 
   return (
@@ -139,6 +140,29 @@ export default async function Home({ params }: Props) {
             </div>
             <span className="inline-flex items-center gap-1 text-sm font-medium text-emerald-600 dark:text-emerald-400 group-hover:gap-2 transition-all shrink-0">
               {dict.home.guideCardCTA} <span aria-hidden="true">→</span>
+            </span>
+          </div>
+        </Link>
+
+        {/* News brief card */}
+        <Link
+          href={`/${lang}/news`}
+          className="mb-20 block rounded-2xl border border-zinc-200/80 bg-white p-8 transition hover:border-purple-300 hover:shadow-lg hover:scale-[1.01] dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:border-purple-700 group animate-in animate-in-4"
+        >
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+            <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-purple-50 text-2xl dark:bg-purple-900/30 shrink-0">
+              📰
+            </div>
+            <div className="flex-1">
+              <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-purple-600 dark:group-hover:text-purple-400">
+                {dict.home.newsCardTitle}
+              </h2>
+              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+                {dict.home.newsCardDesc.replace("{count}", String(newsCount))}
+              </p>
+            </div>
+            <span className="inline-flex items-center gap-1 text-sm font-medium text-purple-600 dark:text-purple-400 group-hover:gap-2 transition-all shrink-0">
+              {dict.home.newsCardCTA} <span aria-hidden="true">→</span>
             </span>
           </div>
         </Link>

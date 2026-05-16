@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { marked } from "marked";
-import { CompareFrontmatter, ComparePage, GuideFrontmatter, GuidePage, Tool } from "@/types/tool";
+import { CompareFrontmatter, ComparePage, GuideFrontmatter, GuidePage, NewsFrontmatter, NewsPage, Tool } from "@/types/tool";
 import toolsData from "@/data/tools.json";
 
 const tools = toolsData as Tool[];
@@ -87,4 +87,46 @@ export function getComparePagesForTool(slug: string, locale: string = "zh"): Com
 
 export function getGuidePageForTool(slug: string, locale: string = "zh"): GuidePage | null {
   return getAllGuidePages(locale).find((p) => p.frontmatter.tool === slug) ?? null;
+}
+
+function getNewsDir(locale: string): string {
+  const dir = path.join(process.cwd(), "content/news", locale);
+  if (fs.existsSync(dir)) return dir;
+  return path.join(process.cwd(), "content/news", "zh");
+}
+
+export function getNewsSlugs(locale: string = "zh"): string[] {
+  const dir = getNewsDir(locale);
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir)
+    .filter((f) => f.endsWith(".md"))
+    .map((f) => f.replace(/\.md$/, ""));
+}
+
+export function getNewsContent(slug: string, locale: string = "zh"): NewsPage | null {
+  const dir = getNewsDir(locale);
+  const filePath = path.join(dir, `${slug}.md`);
+  if (!fs.existsSync(filePath)) return null;
+
+  const raw = fs.readFileSync(filePath, "utf-8");
+  const { data, content } = matter(raw);
+  const frontmatter = data as NewsFrontmatter;
+  const html = marked(content) as string;
+
+  const mentionedTools = (frontmatter.tools ?? [])
+    .map((s) => tools.find((t) => t.slug === s))
+    .filter((t): t is Tool => t !== undefined);
+
+  return { slug, frontmatter, content, html, mentionedTools };
+}
+
+export function getAllNewsPages(locale: string = "zh"): NewsPage[] {
+  return getNewsSlugs(locale)
+    .map((slug) => getNewsContent(slug, locale))
+    .filter((p): p is NewsPage => p !== null)
+    .sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date));
+}
+
+export function getLatestNewsPages(locale: string = "zh", count: number = 5): NewsPage[] {
+  return getAllNewsPages(locale).slice(0, count);
 }

@@ -68,13 +68,13 @@ export function WebSite() {
   );
 }
 
-export function Article({ page }: { page: { title: string; description: string; slug: string; date: string } }) {
+export function Article({ page, basePath = "compare" }: { page: { title: string; description: string; slug: string; date: string }; basePath?: string }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: page.title,
     description: page.description,
-    url: `${BASE_URL}/compare/${page.slug}`,
+    url: `${BASE_URL}/${basePath}/${page.slug}`,
     datePublished: page.date,
     author: { "@type": "Organization", name: "AI Tools Nav" },
   };

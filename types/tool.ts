@@ -260,3 +260,18 @@ export interface GuidePage {
   html: string;
   tool: Tool | undefined;  // resolved from frontmatter.tool
 }
+
+export interface NewsFrontmatter {
+  title: string;
+  description: string;
+  date: string;
+  tools?: string[];  // mentioned tool slugs
+}
+
+export interface NewsPage {
+  slug: string;
+  frontmatter: NewsFrontmatter;
+  content: string;
+  html: string;
+  mentionedTools: Tool[];  // resolved from frontmatter.tools
+}

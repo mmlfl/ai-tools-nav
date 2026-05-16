@@ -18,6 +18,9 @@
     "guideCardTitle": "使用指南",
     "guideCardDesc": "已收录 {count} 篇详细教程，从入门到精通掌握每个 AI 工具的核心功能与使用技巧。",
     "guideCardCTA": "浏览指南",
+    "newsCardTitle": "AI 快讯",
+    "newsCardDesc": "已收录 {count} 期 AI 资讯简报，追踪热门 AI 工具最新动态与行业新闻。",
+    "newsCardCTA": "查看快讯",
     "featuredTitle": "精选工具",
     "viewAll": "查看全部 {count} 个工具",
     "breadcrumbHome": "首页"
@@ -54,6 +57,14 @@
     "emptyText": "暂无使用指南",
     "noMatchText": "没有匹配的使用指南",
     "searchPlaceholder": "搜索工具名，例如 Midjourney、Sora…"
+  },
+  "news": {
+    "listingTitle": "AI 快讯",
+    "listingSubtitle": "每日 AI 工具资讯简报，追踪行业最新动态",
+    "breadcrumb": "AI 快讯",
+    "emptyText": "暂无快讯",
+    "noMatchText": "没有匹配的快讯",
+    "searchPlaceholder": "搜索快讯..."
   },
   "category": {
     "title": "{category} AI 工具",
@@ -107,6 +118,9 @@
     "guideTitle": "AI 工具使用指南 — 从入门到精通",
     "guideDescription": "为 20+ AI 工具提供详细的使用教程，涵盖核心功能、操作步骤、价格说明和适用场景，助你充分发挥每款工具的潜力。",
     "guideOGDescription": "为 20+ AI 工具提供详细的使用教程，助你充分发挥每款工具的潜力。",
+    "newsTitle": "AI 快讯 - 每日 AI 工具资讯",
+    "newsDescription": "每日 AI 工具资讯简报，追踪 ChatGPT、Claude、DeepSeek 等热门 AI 产品最新动态",
+    "newsOGDescription": "每日 AI 快讯，追踪热门 AI 工具最新动态与行业新闻。",
     "notFoundTitle": "404 - 页面未找到",
     "siteKeywords": ["AI工具", "人工智能", "AI导航", "ChatGPT", "AI编程", "AI绘图", "AI视频", "AI工具推荐"]
   },

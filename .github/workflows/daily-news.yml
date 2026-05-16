@@ -1,0 +1,42 @@
+name: Daily AI News Brief
+
+on:
+  schedule:
+    - cron: "0 0 * * *"   # UTC 00:00 = Beijing 08:00
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+concurrency:
+  group: news-gen
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r python-service/requirements.txt
+      - run: python python-service/generate_news.py
+        env:
+          QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
+          QWEN_BASE_URL: ${{ secrets.QWEN_BASE_URL }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+      - name: Commit and push
+        run: |
+          git config user.name "AI Content Bot"
+          git config user.email "bot@lflaitool.top"
+          git add content/news/ data/content-index.json
+          if git diff --cached --quiet; then
+            echo "No new news briefs generated"
+          else
+            git commit -m "auto: daily AI news brief ($(date +%Y-%m-%d))"
+            git push
+          fi

@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 import { Tool } from "@/types/tool";
 import toolsData from "@/data/tools.json";
-import { getAllComparePages, getAllGuidePages } from "@/lib/content";
+import { getAllComparePages, getAllGuidePages, getAllNewsPages } from "@/lib/content";
 
 const BASE_URL = "https://lflaitool.top";
 const LANGS = ["zh", "en"];
@@ -21,6 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/${lang}/category/audio`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 },
     { url: `${BASE_URL}/${lang}/category/office`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 },
     { url: `${BASE_URL}/${lang}/category/search`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 },
+    { url: `${BASE_URL}/${lang}/news`, lastModified: new Date(), changeFrequency: "daily" as const, priority: 0.8 },
   ]);
 
   const toolPages = LANGS.flatMap((lang) =>
@@ -52,5 +53,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   );
 
-  return [...staticPages, ...toolPages, ...compareUrls, ...guideUrls];
+  const newsPages = getAllNewsPages();
+  const newsUrls = LANGS.flatMap((lang) =>
+    newsPages.map((p) => ({
+      url: `${BASE_URL}/${lang}/news/${p.slug}`,
+      lastModified: new Date(p.frontmatter.date),
+      changeFrequency: "daily" as const,
+      priority: 0.7 as const,
+    }))
+  );
+
+  return [...staticPages, ...toolPages, ...compareUrls, ...guideUrls, ...newsUrls];
 }
