@@ -1,8 +1,8 @@
-name: Weekly Content Generation
+name: Compare & Guide Content Generation
 
 on:
   schedule:
-    - cron: "37 8 * * 1"   # Every Monday ~8:37 UTC
+    - cron: "37 8 */2 * *"   # Every 2 days at 8:37 UTC
   workflow_dispatch:         # Manual trigger from GitHub UI
 
 env:
@@ -28,6 +28,7 @@ jobs:
         env:
           QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
           QWEN_BASE_URL: ${{ secrets.QWEN_BASE_URL }}
+          MODEL_NAME: ${{ secrets.MODEL_NAME }}
           MILVUS_URI: ${{ secrets.MILVUS_URI }}
           MILVUS_TOKEN: ${{ secrets.MILVUS_TOKEN }}
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
@@ -35,6 +36,7 @@ jobs:
         env:
           QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
           QWEN_BASE_URL: ${{ secrets.QWEN_BASE_URL }}
+          MODEL_NAME: ${{ secrets.MODEL_NAME }}
           MILVUS_URI: ${{ secrets.MILVUS_URI }}
           MILVUS_TOKEN: ${{ secrets.MILVUS_TOKEN }}
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}

@@ -26,5 +26,6 @@ jobs:
         env:
           QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
           QWEN_BASE_URL: ${{ secrets.QWEN_BASE_URL }}
+          MODEL_NAME: ${{ secrets.MODEL_NAME }}
           MILVUS_URI: ${{ secrets.MILVUS_URI }}
           MILVUS_TOKEN: ${{ secrets.MILVUS_TOKEN }}

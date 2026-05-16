@@ -47,7 +47,8 @@ export function getCompareContent(slug: string, locale: string = "zh"): CompareP
 export function getAllComparePages(locale: string = "zh"): ComparePage[] {
   return getCompareSlugs(locale)
     .map((slug) => getCompareContent(slug, locale))
-    .filter((p): p is ComparePage => p !== null);
+    .filter((p): p is ComparePage => p !== null)
+    .sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date));
 }
 
 export function getGuideSlugs(locale: string = "zh"): string[] {
@@ -76,7 +77,8 @@ export function getGuideContent(slug: string, locale: string = "zh"): GuidePage 
 export function getAllGuidePages(locale: string = "zh"): GuidePage[] {
   return getGuideSlugs(locale)
     .map((slug) => getGuideContent(slug, locale))
-    .filter((p): p is GuidePage => p !== null);
+    .filter((p): p is GuidePage => p !== null)
+    .sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date));
 }
 
 export function getComparePagesForTool(slug: string, locale: string = "zh"): ComparePage[] {

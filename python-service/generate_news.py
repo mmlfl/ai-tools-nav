@@ -29,16 +29,19 @@ from lib import (
     MAX_RETRIES,
 )
 
-MAX_TOOLS = 12
+MAX_TOOLS = 30
 MAX_ARTICLES_PER_RUN = 2  # zh + en
 TODAY = date.today().strftime("%Y-%m-%d")
 
 
 def get_featured_tools():
-    """Get up to MAX_TOOLS featured tools, sorted by slug."""
+    """Get up to MAX_TOOLS tools, featured first then by name."""
     tools = load_tools()
     featured = [t for t in tools if t.get("featured")]
-    return featured[:MAX_TOOLS]
+    rest = [t for t in tools if not t.get("featured")]
+    featured.sort(key=lambda t: t["slug"])
+    rest.sort(key=lambda t: t["slug"])
+    return (featured + rest)[:MAX_TOOLS]
 
 
 def search_exa_news(tool_slug, tool_name):
@@ -54,7 +57,7 @@ def search_exa_news(tool_slug, tool_name):
             headers={"x-api-key": api_key, "Content-Type": "application/json"},
             json={
                 "query": f"{tool_name} AI latest news update {TODAY}",
-                "numResults": 5,
+                "numResults": 3,
                 "type": "auto",
             },
             timeout=15,
@@ -76,9 +79,44 @@ def search_exa_news(tool_slug, tool_name):
         return []
 
 
+def search_exa_general():
+    """Search Exa for general AI industry news, not tied to a specific tool."""
+    api_key = os.getenv("EXA_API_KEY")
+    if not api_key:
+        return []
+
+    queries = [
+        f"AI artificial intelligence latest news {TODAY}",
+        f"AI tools product launch update {TODAY}",
+        f"large language model new release {TODAY}",
+    ]
+    results = []
+    for q in queries:
+        try:
+            resp = httpx.post(
+                "https://api.exa.ai/search",
+                headers={"x-api-key": api_key, "Content-Type": "application/json"},
+                json={"query": q, "numResults": 3, "type": "auto"},
+                timeout=15,
+            )
+            if resp.status_code == 200:
+                for item in resp.json().get("results", []):
+                    results.append({
+                        "text": item.get("text", item.get("title", "")),
+                        "title": item.get("title", ""),
+                        "url": item.get("url", ""),
+                    })
+        except Exception as e:
+            print(f"[News] General Exa search failed for '{q[:40]}': {e}")
+    return results
+
+
 def build_news_prompt(lang):
     """Build system and user prompts for news generation."""
     tools = get_featured_tools()
+
+    # Gather general AI industry news
+    general_news = search_exa_general()
 
     # Gather news for each tool
     news_items = []
@@ -93,34 +131,43 @@ def build_news_prompt(lang):
             })
         rate_limit()
 
-    if not news_items:
+    if not news_items and not general_news:
         print("[News] No Exa results for any tool, aborting")
         return None, None, []
 
     # Build news summary for prompt
     news_blocks = []
+
+    if general_news:
+        gen_text = "\n".join(
+            f"  - [{a['title']}]({a['url']})\n    {a['text'][:400]}"
+            for a in general_news[:8]
+        )
+        news_blocks.append(f"## AI 行业综合动态\n{gen_text}" if lang == "zh" else f"## AI Industry Overview\n{gen_text}")
+
     mentioned_slugs = []
     for item in news_items:
         mentioned_slugs.append(item["tool_slug"])
         articles_text = "\n".join(
-            f"  - [{a['title']}]({a['url']})\n    {a['text'][:500]}"
-            for a in item["articles"]
+            f"  - [{a['title']}]({a['url']})\n    {a['text'][:400]}"
+            for a in item["articles"][:3]
         )
         news_blocks.append(f"## {item['tool_name']}\n{articles_text}")
 
     news_context = "\n\n".join(news_blocks)
 
     if lang == "en":
-        system_prompt = """You are an AI industry news editor. Your job is to synthesize news about multiple AI tools into a concise daily briefing.
+        system_prompt = """You are an AI industry news editor. Your job is to synthesize news about AI tools into a concise daily briefing.
 
 Rules:
 1. Write in English
 2. Output valid YAML frontmatter with: title, description, date, tools (array of tool slugs mentioned)
 3. Title format: "AI News Brief | {date}"
 4. Description: 1-2 sentences summarizing the day's key highlights
-5. Body: group news by tool, each tool gets 2-3 sentences summarizing key updates, with source links
-6. Total length: 800-1500 words
-7. Use markdown formatting: ## for tool sections, - for bullet points, [text](url) for links"""
+5. Body: start with a ## AI Industry Overview section (if industry news present), then group by tool with 2-3 sentences each and source links
+6. Total length: 1000-2000 words
+7. Use markdown formatting: ## for sections, - for bullet points, [text](url) for links
+8. Cover as many tools as possible — prioritize important news, skip tools with no news"""
     else:
         system_prompt = """你是 AI 行业快讯编辑。请将多个 AI 工具的最新动态整合成一份简洁的日报。
 
@@ -129,9 +176,10 @@ Rules:
 2. 输出合法的 YAML frontmatter：title, description, date, tools（提及的工具 slug 数组）
 3. 标题格式："AI 快讯日报 | {date}"
 4. description：1-2 句话总结当天要点
-5. 正文：按工具分段，每段 2-3 句话概述关键动态，附来源链接
-6. 总长度：800-1500 字
-7. 使用 Markdown 格式：## 用于工具小节，- 用于列表，[文本](url) 用于链接"""
+5. 正文：先写 ## AI 行业综合动态（如有行业新闻），再按工具分段，每段 2-3 句话概述关键动态，附来源链接
+6. 总长度：1000-2000 字
+7. 使用 Markdown 格式：## 用于小节，- 用于列表，[文本](url) 用于链接
+8. 尽量覆盖更多工具——优先重要新闻，无新闻的工具可跳过"""
 
     user_prompt = f"""以下是今天（{TODAY}）各 AI 工具的最新资讯搜索结果，请整合成一份 AI 快讯日报。
 
@@ -141,7 +189,8 @@ Rules:
 生成要求：
 - frontmatter 中 tools 字段列出提及的 tool slug：{mentioned_slugs}
 - date 使用 {TODAY}
-- 按重要程度排列工具顺序，最重要的工具排在最前面"""
+- 先写行业综合动态，再按重要程度排列各工具新闻
+- 尽量覆盖更多工具，让读者全面了解当日 AI 动态"""
 
     if lang == "en":
         user_prompt = f"""Here are the latest AI tool news search results for today ({TODAY}). Please synthesize into an AI news daily brief.
@@ -152,7 +201,8 @@ Rules:
 Requirements:
 - In frontmatter, tools field lists mentioned tool slugs: {mentioned_slugs}
 - date use {TODAY}
-- Order tools by importance, most important first"""
+- Start with industry overview, then order tools by importance
+- Cover as many tools as possible for a comprehensive daily briefing"""
 
     return system_prompt, user_prompt, mentioned_slugs
 

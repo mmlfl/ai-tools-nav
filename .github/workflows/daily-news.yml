@@ -28,6 +28,7 @@ jobs:
         env:
           QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
           QWEN_BASE_URL: ${{ secrets.QWEN_BASE_URL }}
+          MODEL_NAME: ${{ secrets.MODEL_NAME }}
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
       - name: Commit and push
         run: |

@@ -224,11 +224,11 @@ def retrieve_context(slugs, article_type="compare", lang="zh"):
     chunks = search_tool_context(slugs, queries)
     print(f"[RAG] Milvus returned {len(chunks)} chunks for {slugs}")
 
-    if len(chunks) < 2:
-        exa = search_exa(slugs)
-        if exa:
-            chunks.extend(exa)
-            chunks.sort(key=lambda x: x["score"], reverse=True)
+    exa = search_exa(slugs)
+    if exa:
+        print(f"[RAG] Exa returned {len(exa)} results for {slugs}")
+        chunks.extend(exa)
+        chunks.sort(key=lambda x: x["score"], reverse=True)
 
     if not chunks:
         return ""
