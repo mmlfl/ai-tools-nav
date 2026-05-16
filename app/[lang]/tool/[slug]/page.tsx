@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Tool, CATEGORY_LABELS, PRICING_LABELS } from "@/types/tool";
+import { Tool, tName, tDesc, getCategoryLabel, getPricingLabel } from "@/types/tool";
 import toolsData from "@/data/tools.json";
 import ToolCard from "@/components/ToolCard";
 import BackLink from "@/components/BackLink";
@@ -52,16 +52,16 @@ export default async function ToolDetailPage({ params }: Props) {
     .filter((t) => t.category === tool.category && t.slug !== tool.slug)
     .slice(0, 3);
 
-  const comparePages = getComparePagesForTool(tool.slug);
-  const guidePage = getGuidePageForTool(tool.slug);
+  const comparePages = getComparePagesForTool(tool.slug, lang);
+  const guidePage = getGuidePageForTool(tool.slug, lang);
 
   return (
     <>
       <BreadcrumbList
         items={[
           { name: dict.home.breadcrumbHome, url: `${BASE_URL}/${lang}` },
-          { name: CATEGORY_LABELS[tool.category], url: `${BASE_URL}/${lang}/category/${tool.category}` },
-          { name: tool.name, url: `${BASE_URL}/${lang}/tool/${tool.slug}` },
+          { name: getCategoryLabel(tool.category, lang), url: `${BASE_URL}/${lang}/category/${tool.category}` },
+          { name: tName(tool, lang), url: `${BASE_URL}/${lang}/tool/${tool.slug}` },
         ]}
       />
       <SoftwareApplication tool={tool} />
@@ -71,18 +71,18 @@ export default async function ToolDetailPage({ params }: Props) {
         <article className="rounded-2xl border border-zinc-200/80 bg-white p-8 dark:border-zinc-800/80 dark:bg-zinc-900">
           <div className="flex items-start gap-5">
             <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-zinc-100 text-2xl font-bold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
-              {tool.name.charAt(0)}
+              {tName(tool, lang).charAt(0)}
             </div>
             <div className="flex-1">
-              <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{tool.name}</h1>
-              <p className="mt-2 text-zinc-500 dark:text-zinc-400">{tool.description}</p>
+              <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{tName(tool, lang)}</h1>
+              <p className="mt-2 text-zinc-500 dark:text-zinc-400">{tDesc(tool, lang)}</p>
             </div>
           </div>
 
           <div className="mt-6 flex flex-wrap gap-4">
             <div className="flex flex-wrap gap-2">
               <span className="rounded-md bg-blue-50 px-3 py-1 text-sm font-medium text-blue-600 dark:bg-blue-950 dark:text-blue-400">
-                {CATEGORY_LABELS[tool.category]}
+                {getCategoryLabel(tool.category, lang)}
               </span>
               {tool.tags.map((tag) => (
                 <span
@@ -94,7 +94,7 @@ export default async function ToolDetailPage({ params }: Props) {
               ))}
             </div>
             <span className="rounded-lg bg-zinc-100 px-3 py-1 text-sm font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
-              {PRICING_LABELS[tool.pricing]}
+              {getPricingLabel(tool.pricing, lang)}
             </span>
           </div>
 

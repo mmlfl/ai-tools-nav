@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { CATEGORY_LABELS, Category, Tool } from "@/types/tool";
+import { getCategoryLabel, Category, Tool } from "@/types/tool";
 import toolsData from "@/data/tools.json";
 import ToolCard from "@/components/ToolCard";
 import BackLink from "@/components/BackLink";
@@ -53,13 +53,13 @@ export default async function CategoryPage({ params }: Props) {
       <BreadcrumbList
         items={[
           { name: dict.home.breadcrumbHome, url: `${BASE_URL}/${lang}` },
-          { name: CATEGORY_LABELS[cat], url: `${BASE_URL}/${lang}/category/${cat}` },
+          { name: getCategoryLabel(cat, lang), url: `${BASE_URL}/${lang}/category/${cat}` },
         ]}
       />
       <div className="mx-auto max-w-6xl px-4 py-12">
         <BackLink href={`/${lang}/tools`} label={dict.tools.title} />
         <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-          {CATEGORY_LABELS[cat]}
+          {getCategoryLabel(cat, lang)}
           <span className="ml-3 text-lg font-normal text-zinc-400">
             {tools.length} {lang === "zh" ? "个工具" : "tools"}
           </span>

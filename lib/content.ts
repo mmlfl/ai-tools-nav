@@ -79,14 +79,12 @@ export function getAllGuidePages(locale: string = "zh"): GuidePage[] {
     .filter((p): p is GuidePage => p !== null);
 }
 
-// Cross-reference helpers — always use zh for slug-based lookups since slugs are locale-independent
-
-export function getComparePagesForTool(slug: string): ComparePage[] {
-  return getAllComparePages("zh").filter((p) =>
+export function getComparePagesForTool(slug: string, locale: string = "zh"): ComparePage[] {
+  return getAllComparePages(locale).filter((p) =>
     p.frontmatter.tools.includes(slug)
   );
 }
 
-export function getGuidePageForTool(slug: string): GuidePage | null {
-  return getAllGuidePages("zh").find((p) => p.frontmatter.tool === slug) ?? null;
+export function getGuidePageForTool(slug: string, locale: string = "zh"): GuidePage | null {
+  return getAllGuidePages(locale).find((p) => p.frontmatter.tool === slug) ?? null;
 }

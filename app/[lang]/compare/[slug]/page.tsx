@@ -73,7 +73,7 @@ export default async function ComparePage({ params }: Props) {
             </h2>
             <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {page.relatedTools.map((t) => {
-                const guide = getGuidePageForTool(t.slug);
+                const guide = getGuidePageForTool(t.slug, lang);
                 return (
                   <div key={t.slug} className="space-y-3">
                     <ToolCard tool={t} locale={lang} />

@@ -43,7 +43,7 @@ export default async function GuidePage({ params }: Props) {
 
   if (!page) notFound();
 
-  const comparePages = page.tool ? getComparePagesForTool(page.tool.slug) : [];
+  const comparePages = page.tool ? getComparePagesForTool(page.tool.slug, lang) : [];
 
   return (
     <>
