@@ -24,7 +24,15 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r python-service/requirements.txt
-      - run: python python-service/generate_news.py
+      - name: Generate Chinese news
+        run: python python-service/generate_news.py --lang=zh
+        env:
+          QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
+          QWEN_BASE_URL: ${{ secrets.QWEN_BASE_URL }}
+          MODEL_NAME: ${{ secrets.MODEL_NAME }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+      - name: Generate English news
+        run: python python-service/generate_news.py --lang=en
         env:
           QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
           QWEN_BASE_URL: ${{ secrets.QWEN_BASE_URL }}
