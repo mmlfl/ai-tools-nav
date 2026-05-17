@@ -5,11 +5,15 @@ import { getAllNewsPages } from "@/lib/content";
 import { getDictionary, hasLocale, type Locale } from "@/lib/dictionary";
 import { BreadcrumbList } from "@/components/StructuredData";
 import BackLink from "@/components/BackLink";
+import toolsData from "@/data/tools.json";
+import type { Tool } from "@/types/tool";
 
 const BASE_URL = "https://lflaitool.top";
+const tools = toolsData as Tool[];
 
 interface Props {
   params: Promise<{ lang: string }>;
+  searchParams: Promise<{ tool?: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -27,12 +31,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function NewsListPage({ params }: Props) {
+export default async function NewsListPage({ params, searchParams }: Props) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
 
   const dict = await getDictionary(lang as Locale);
-  const pages = getAllNewsPages(lang);
+  const s = await searchParams;
+  const activeTool = s.tool ?? null;
+  const activeToolName = activeTool ? tools.find((t) => t.slug === activeTool)?.name ?? activeTool : null;
+
+  const allPages = getAllNewsPages(lang);
+  const pages = activeTool
+    ? allPages.filter((p) => p.frontmatter.tools?.includes(activeTool))
+    : allPages;
 
   return (
     <>
@@ -48,8 +59,25 @@ export default async function NewsListPage({ params }: Props) {
         <h1 className="mt-4 text-3xl font-bold text-foreground">{dict.news.listingTitle}</h1>
         <p className="mt-2 text-muted">{dict.news.listingSubtitle}</p>
 
+        {/* Active filter pill */}
+        {activeTool && (
+          <div className="mt-6 flex items-center gap-2">
+            <span className="text-sm text-muted">{lang === "en" ? "Filtered by:" : "筛选工具:"}</span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-purple-100 px-3 py-1 text-sm font-medium text-purple-700 dark:bg-purple-900/40 dark:text-purple-300">
+              {activeToolName}
+              <Link
+                href={`/${lang}/news`}
+                className="ml-0.5 inline-flex h-4 w-4 items-center justify-center rounded-full text-purple-500 hover:bg-purple-200 dark:hover:bg-purple-800 transition"
+                aria-label={lang === "en" ? "Clear filter" : "清除筛选"}
+              >
+                ×
+              </Link>
+            </span>
+          </div>
+        )}
+
         {pages.length === 0 ? (
-          <p className="mt-12 text-center text-muted">{dict.news.emptyText}</p>
+          <p className="mt-12 text-center text-muted">{activeTool ? dict.news.noMatchText : dict.news.emptyText}</p>
         ) : (
           <div className="mt-10 relative">
             {/* Timeline vertical line */}
@@ -82,12 +110,18 @@ export default async function NewsListPage({ params }: Props) {
                     {page.mentionedTools.length > 0 && (
                       <div className="mt-3 flex flex-wrap gap-1.5">
                         {page.mentionedTools.map((t) => (
-                          <span
+                          <Link
                             key={t.slug}
-                            className="rounded-md bg-purple-50 px-2 py-0.5 text-xs text-purple-600 dark:bg-purple-950 dark:text-purple-400"
+                            href={`/${lang}/news?tool=${t.slug}`}
+                            onClick={(e) => e.stopPropagation()}
+                            className={`rounded-md px-2 py-0.5 text-xs transition ${
+                              activeTool === t.slug
+                                ? "bg-purple-500 text-white dark:bg-purple-400 dark:text-white"
+                                : "bg-purple-50 text-purple-600 hover:bg-purple-100 dark:bg-purple-950 dark:text-purple-400 dark:hover:bg-purple-900"
+                            }`}
                           >
                             {t.name}
-                          </span>
+                          </Link>
                         ))}
                       </div>
                     )}

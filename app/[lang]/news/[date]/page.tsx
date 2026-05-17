@@ -75,7 +75,19 @@ export default async function NewsDetailPage({ params }: Props) {
             <h2 className="text-xl font-semibold text-foreground">
               {lang === "en" ? "Tools Mentioned" : "提及的工具"}
             </h2>
-            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-3 flex flex-wrap gap-2">
+              {page.mentionedTools.map((tool) => (
+                <Link
+                  key={tool.slug}
+                  href={`/${lang}/news?tool=${tool.slug}`}
+                  className="inline-flex items-center gap-1 rounded-lg bg-purple-50 px-3 py-1.5 text-sm font-medium text-purple-600 transition hover:bg-purple-100 hover:text-purple-700 dark:bg-purple-950 dark:text-purple-400 dark:hover:bg-purple-900 dark:hover:text-purple-300"
+                >
+                  {tool.name}
+                  <span className="text-purple-400 dark:text-purple-500">→</span>
+                </Link>
+              ))}
+            </div>
+            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {page.mentionedTools.map((tool) => (
                 <ToolCard key={tool.slug} tool={tool} locale={lang} />
               ))}
