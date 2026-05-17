@@ -2,7 +2,7 @@ name: Daily AI News Brief
 
 on:
   schedule:
-    - cron: "0 0 * * *"   # UTC 00:00 = Beijing 08:00
+    - cron: "7 0 * * *"   # UTC 00:07 = Beijing 08:07 (off-peak minute avoids on-hour congestion)
   workflow_dispatch:
 
 env:

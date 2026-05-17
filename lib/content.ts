@@ -7,6 +7,12 @@ import toolsData from "@/data/tools.json";
 
 const tools = toolsData as Tool[];
 
+function asString(d: unknown): string {
+  if (d instanceof Date) return d.toISOString().slice(0, 10);
+  if (typeof d === "string") return d;
+  return String(d);
+}
+
 function getCompareDir(locale: string): string {
   const dir = path.join(process.cwd(), "content/compare", locale);
   if (fs.existsSync(dir)) return dir;
@@ -34,7 +40,7 @@ export function getCompareContent(slug: string, locale: string = "zh"): CompareP
 
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);
-  const frontmatter = data as CompareFrontmatter;
+  const frontmatter = { ...data, date: asString(data.date), tools: (data.tools ?? []) as string[] } as CompareFrontmatter;
   const html = marked(content) as string;
 
   const relatedTools = frontmatter.tools
@@ -66,7 +72,7 @@ export function getGuideContent(slug: string, locale: string = "zh"): GuidePage 
 
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);
-  const frontmatter = data as GuideFrontmatter;
+  const frontmatter = { ...data, date: asString(data.date) } as GuideFrontmatter;
   const html = marked(content) as string;
 
   const tool = tools.find((t) => t.slug === frontmatter.tool);
@@ -112,7 +118,7 @@ export function getNewsContent(slug: string, locale: string = "zh"): NewsPage | 
 
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);
-  const frontmatter = data as NewsFrontmatter;
+  const frontmatter = { ...data, date: asString(data.date), tools: (data.tools ?? []) as string[] } as NewsFrontmatter;
   const html = marked(content) as string;
 
   const mentionedTools = (frontmatter.tools ?? [])
