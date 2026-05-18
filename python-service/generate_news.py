@@ -10,6 +10,7 @@ Writes to content/news/{lang}/{date}.md and updates data/content-index.json.
 
 import os
 import sys
+import time
 from datetime import date
 from pathlib import Path
 
@@ -32,6 +33,46 @@ from lib import (
 MAX_TOOLS = 30
 MAX_ARTICLES_PER_RUN = 2  # zh + en
 TODAY = date.today().strftime("%Y-%m-%d")
+EXA_MAX_RETRIES = 3
+EXA_BASE_DELAY = 2.0  # seconds, doubles each retry
+
+
+def _exa_post(json_payload, timeout=15):
+    """POST to Exa API with retry on rate-limit (429) and transient errors."""
+    api_key = os.getenv("EXA_API_KEY")
+    if not api_key:
+        return None
+
+    last_status = None
+    for attempt in range(EXA_MAX_RETRIES + 1):
+        try:
+            resp = httpx.post(
+                "https://api.exa.ai/search",
+                headers={"x-api-key": api_key, "Content-Type": "application/json"},
+                json=json_payload,
+                timeout=timeout,
+            )
+            if resp.status_code == 200:
+                return resp
+            last_status = resp.status_code
+            if resp.status_code == 429:
+                delay = EXA_BASE_DELAY * (2 ** attempt)
+                print(f"[News] Exa rate-limited (attempt {attempt+1}), sleeping {delay:.0f}s...")
+                time.sleep(delay)
+                continue
+            # Non-retryable error
+            print(f"[News] Exa returned {resp.status_code}")
+            return None
+        except Exception as e:
+            if attempt < EXA_MAX_RETRIES:
+                delay = EXA_BASE_DELAY * (2 ** attempt)
+                print(f"[News] Exa request failed (attempt {attempt+1}): {e}, retrying in {delay:.0f}s...")
+                time.sleep(delay)
+            else:
+                print(f"[News] Exa request failed after {EXA_MAX_RETRIES+1} attempts: {e}")
+                return None
+    print(f"[News] Exa rate-limited after {EXA_MAX_RETRIES+1} attempts (last status: {last_status})")
+    return None
 
 
 def get_featured_tools():
@@ -45,46 +86,26 @@ def get_featured_tools():
 
 
 def search_exa_news(tool_slug, tool_name):
-    """Search Exa for latest news about a specific AI tool."""
-    api_key = os.getenv("EXA_API_KEY")
-    if not api_key:
-        print("[News] EXA_API_KEY not set, cannot search")
+    """Search Exa for latest news about a specific AI tool (with retry)."""
+    resp = _exa_post({
+        "query": f"{tool_name} AI latest news update {TODAY}",
+        "numResults": 3,
+        "type": "auto",
+    })
+    if resp is None:
         return []
-
-    try:
-        resp = httpx.post(
-            "https://api.exa.ai/search",
-            headers={"x-api-key": api_key, "Content-Type": "application/json"},
-            json={
-                "query": f"{tool_name} AI latest news update {TODAY}",
-                "numResults": 3,
-                "type": "auto",
-            },
-            timeout=15,
-        )
-        if resp.status_code == 200:
-            results = []
-            for item in resp.json().get("results", []):
-                results.append({
-                    "text": item.get("text", item.get("title", "")),
-                    "title": item.get("title", ""),
-                    "url": item.get("url", ""),
-                })
-            return results
-        else:
-            print(f"[News] Exa returned {resp.status_code} for '{tool_slug}'")
-            return []
-    except Exception as e:
-        print(f"[News] Exa search failed for '{tool_slug}': {e}")
-        return []
+    results = []
+    for item in resp.json().get("results", []):
+        results.append({
+            "text": item.get("text", item.get("title", "")),
+            "title": item.get("title", ""),
+            "url": item.get("url", ""),
+        })
+    return results
 
 
 def search_exa_general():
-    """Search Exa for general AI industry news, not tied to a specific tool."""
-    api_key = os.getenv("EXA_API_KEY")
-    if not api_key:
-        return []
-
+    """Search Exa for general AI industry news, with retry on each query."""
     queries = [
         f"AI artificial intelligence latest news {TODAY}",
         f"AI tools product launch update {TODAY}",
@@ -92,22 +113,14 @@ def search_exa_general():
     ]
     results = []
     for q in queries:
-        try:
-            resp = httpx.post(
-                "https://api.exa.ai/search",
-                headers={"x-api-key": api_key, "Content-Type": "application/json"},
-                json={"query": q, "numResults": 3, "type": "auto"},
-                timeout=15,
-            )
-            if resp.status_code == 200:
-                for item in resp.json().get("results", []):
-                    results.append({
-                        "text": item.get("text", item.get("title", "")),
-                        "title": item.get("title", ""),
-                        "url": item.get("url", ""),
-                    })
-        except Exception as e:
-            print(f"[News] General Exa search failed for '{q[:40]}': {e}")
+        resp = _exa_post({"query": q, "numResults": 3, "type": "auto"})
+        if resp is not None:
+            for item in resp.json().get("results", []):
+                results.append({
+                    "text": item.get("text", item.get("title", "")),
+                    "title": item.get("title", ""),
+                    "url": item.get("url", ""),
+                })
     return results
 
 
@@ -267,6 +280,7 @@ def main():
     print(f"[News] Generating daily news brief for {TODAY}, langs={langs}")
 
     count = 0
+    failed = []
     for lang in langs:
         if count >= MAX_ARTICLES_PER_RUN:
             break
@@ -275,10 +289,19 @@ def main():
         if slug:
             print(f"[News] Generated: {slug} ({lang})")
             count += 1
+        else:
+            failed.append(lang)
+            print(f"[News] WARNING: No content generated for lang={lang}")
         if len(langs) > 1:
-            rate_limit()
+            # Wait longer between languages to stay under Exa rate limits
+            delay = 30
+            print(f"[News] Cooling down {delay}s before next language...")
+            time.sleep(delay)
 
     print(f"[News] Done. Generated {count} article(s).")
+    if failed:
+        print(f"[News] ERROR: Failed to generate for: {failed}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
