@@ -75,6 +75,43 @@
         "ideogram",
         "iflyrec"
       ]
+    },
+    {
+      "slug": "2026-05-18",
+      "title": "AI 快讯日报 | 2026-05-18",
+      "date": "2026-05-18",
+      "tools": [
+        "bolt-new",
+        "chatgpt",
+        "claude",
+        "cursor",
+        "deepseek",
+        "devin",
+        "doubao",
+        "elevenlabs",
+        "flux",
+        "gemini",
+        "github-copilot",
+        "kimi",
+        "kling",
+        "metaso",
+        "midjourney",
+        "notion-ai",
+        "perplexity",
+        "pika",
+        "qwen",
+        "sora",
+        "consensus",
+        "dall-e",
+        "descript",
+        "ernie",
+        "gamma",
+        "grok",
+        "hailuo-ai",
+        "heygen",
+        "ideogram",
+        "iflyrec"
+      ]
     }
   ]
 }
